@@ -1,65 +1,19 @@
 # -*- coding: utf-8 -*-
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, re
+import pytest
 from group import Group
+from application import Application
 
 
-class AddGroup(unittest.TestCase):
-    def setUp(self):
-        self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(30)
-
-    def create_new_group(self, wd, group):
-        # new group
-        wd.find_element_by_name("new").click()
-        # filling new group parameters
-        wd.find_element_by_name("group_name").click()
-        wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(group.name)
-        wd.find_element_by_name("group_header").click()
-        wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys(group.header)
-        wd.find_element_by_name("group_footer").click()
-        wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys(group.footer)
-        # submit new group
-        wd.find_element_by_name("submit").click()
-
-    def open_group_list(self, wd):
-        wd.find_element_by_link_text("groups").click()
-
-    def open_home_page(self, wd):
-        wd.get("http://10.201.48.35/addressbookv4.1.4/")
-
-    def is_element_present(self, how, what):
-        try:
-            self.wd.find_element(by=how, value=what)
-        except NoSuchElementException as e:
-            return False
-        return True
-
-    def is_alert_present(self):
-        try:
-            self.wd.switch_to_alert()
-        except NoAlertPresentException as e:
-            return False
-        return True
-
-    def tearDown(self):
-        self.wd.quit()
-
-    def test_add_group(self):
-        wd = self.wd
-        self.open_home_page(wd)
-        self.open_group_list(wd)
-        self.create_new_group(wd, Group("name1", "header78", "footer_test"))
-        self.open_group_list(wd)
+@pytest.fixture
+def app(request):
+    fixture = Application()
+    request.addfinalizer(fixture.destroy)
+    return fixture
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_add_group(app):
+    app.open_home_page()
+    app.open_group_list()
+    app.create_new_group(Group("name1", "header78", "footer_test"))
+    app.open_group_list()
+
