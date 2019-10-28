@@ -7,6 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
+
 class AddGroup(unittest.TestCase):
     def setUp(self):
         self.wd = webdriver.Firefox()
@@ -14,9 +15,15 @@ class AddGroup(unittest.TestCase):
 
     def test_add_group(self):
         wd = self.wd
-        wd.get("http://10.201.48.35/addressbookv4.1.4/")
-        wd.find_element_by_link_text("groups").click()
+        self.open_home_page(wd)
+        self.open_group_list(wd)
+        self.create_new_group(wd)
+        self.open_group_list(wd)
+
+    def create_new_group(self, wd):
+        # new group
         wd.find_element_by_name("new").click()
+        # filling new group parameters
         wd.find_element_by_name("group_name").click()
         wd.find_element_by_name("group_name").clear()
         wd.find_element_by_name("group_name").send_keys("Test_group_1")
@@ -26,17 +33,27 @@ class AddGroup(unittest.TestCase):
         wd.find_element_by_name("group_footer").click()
         wd.find_element_by_name("group_footer").clear()
         wd.find_element_by_name("group_footer").send_keys("Comment1")
+        # submit new group
         wd.find_element_by_name("submit").click()
+
+    def open_group_list(self, wd):
         wd.find_element_by_link_text("groups").click()
-    
+
+    def open_home_page(self, wd):
+        wd.get("http://10.201.48.35/addressbookv4.1.4/")
+
     def is_element_present(self, how, what):
-        try: self.wd.find_element(by=how, value=what)
-        except NoSuchElementException as e: return False
+        try:
+            self.wd.find_element(by=how, value=what)
+        except NoSuchElementException as e:
+            return False
         return True
-    
+
     def is_alert_present(self):
-        try: self.wd.switch_to_alert()
-        except NoAlertPresentException as e: return False
+        try:
+            self.wd.switch_to_alert()
+        except NoAlertPresentException as e:
+            return False
         return True
 
     def tearDown(self):
