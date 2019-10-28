@@ -14,13 +14,6 @@ class AddGroup(unittest.TestCase):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
 
-    def test_add_group(self):
-        wd = self.wd
-        self.open_home_page(wd)
-        self.open_group_list(wd)
-        self.create_new_group(wd, Group("name1", "header78", "footer_test"))
-        self.open_group_list(wd)
-
     def create_new_group(self, wd, group):
         # new group
         wd.find_element_by_name("new").click()
@@ -59,6 +52,13 @@ class AddGroup(unittest.TestCase):
 
     def tearDown(self):
         self.wd.quit()
+
+    def test_add_group(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.open_group_list(wd)
+        self.create_new_group(wd, Group("name1", "header78", "footer_test"))
+        self.open_group_list(wd)
 
 
 if __name__ == "__main__":
