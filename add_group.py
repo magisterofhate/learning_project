@@ -17,22 +17,22 @@ class AddGroup(unittest.TestCase):
         wd = self.wd
         self.open_home_page(wd)
         self.open_group_list(wd)
-        self.create_new_group(wd)
+        self.create_new_group(wd, name="Group1", header="Logo666", footer="FOOTER")
         self.open_group_list(wd)
 
-    def create_new_group(self, wd):
+    def create_new_group(self, wd, name, header, footer):
         # new group
         wd.find_element_by_name("new").click()
         # filling new group parameters
         wd.find_element_by_name("group_name").click()
         wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys("Test_group_1")
+        wd.find_element_by_name("group_name").send_keys(name)
         wd.find_element_by_name("group_header").click()
         wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys("Logo1")
+        wd.find_element_by_name("group_header").send_keys(header)
         wd.find_element_by_name("group_footer").click()
         wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys("Comment1")
+        wd.find_element_by_name("group_footer").send_keys(footer)
         # submit new group
         wd.find_element_by_name("submit").click()
 
