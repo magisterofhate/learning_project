@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
+from group import Group
 
 
 class AddGroup(unittest.TestCase):
@@ -17,22 +18,22 @@ class AddGroup(unittest.TestCase):
         wd = self.wd
         self.open_home_page(wd)
         self.open_group_list(wd)
-        self.create_new_group(wd, name="Group1", header="Logo666", footer="FOOTER")
+        self.create_new_group(wd, Group("name1", "header78", "footer_test"))
         self.open_group_list(wd)
 
-    def create_new_group(self, wd, name, header, footer):
+    def create_new_group(self, wd, group):
         # new group
         wd.find_element_by_name("new").click()
         # filling new group parameters
         wd.find_element_by_name("group_name").click()
         wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(name)
+        wd.find_element_by_name("group_name").send_keys(group.name)
         wd.find_element_by_name("group_header").click()
         wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys(header)
+        wd.find_element_by_name("group_header").send_keys(group.header)
         wd.find_element_by_name("group_footer").click()
         wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys(footer)
+        wd.find_element_by_name("group_footer").send_keys(group.footer)
         # submit new group
         wd.find_element_by_name("submit").click()
 
