@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import Select
 from fixture.create_items import CreateItems
 from fixture.navigation import Navigation
 from fixture.delete_items import DeleteItems
+from fixture.modify_items import ModifyItems
 
 
 class Application:
@@ -17,6 +18,7 @@ class Application:
         self.create_items = CreateItems(self)
         self.navigation = Navigation(self)
         self.delete_items = DeleteItems(self)
+        self.modify_items = ModifyItems(self)
 
     def destroy(self):
         self.wd.quit()
