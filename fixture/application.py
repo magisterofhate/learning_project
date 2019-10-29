@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from fixture.create_items import CreateItems
+from fixture.navigation import Navigation
 
 
 class Application:
@@ -13,14 +14,7 @@ class Application:
         self.select = webdriver.support.ui.Select
         self.wd.implicitly_wait(30)
         self.create_items = CreateItems(self)
-
-    def open_group_list(self):
-        wd = self.wd
-        wd.find_element_by_link_text("groups").click()
-
-    def open_home_page(self):
-        wd = self.wd
-        wd.get("http://10.201.48.35/addressbookv4.1.4/")
+        self.navigation = Navigation(self)
 
     def destroy(self):
         self.wd.quit()
