@@ -10,20 +10,13 @@ class Application:
 
     def __init__(self):
         self.wd = webdriver.Firefox()
+        self.select = webdriver.support.ui.Select
         self.wd.implicitly_wait(30)
         self.create_items = CreateItems(self)
 
     def open_group_list(self):
         wd = self.wd
         wd.find_element_by_link_text("groups").click()
-
-    def select_dob(self, dob):
-        dob = Select(self.wd.find_element_by_name("bday")).select_by_visible_text(dob)
-        return dob
-
-    def select_mob(self, mob):
-        mob = Select(self.wd.find_element_by_name("bmonth")).select_by_visible_text(mob)
-        return mob
 
     def open_home_page(self):
         wd = self.wd

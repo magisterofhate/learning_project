@@ -24,7 +24,8 @@ class CreateItems:
 
     def create_contact(self, contact):
         wd = self.app.wd
-        # select = self.app.Select()
+        select = self.app.select
+
         # creation initialization
         wd.find_element_by_link_text("add new").click()
         # form fulfilment
@@ -34,10 +35,8 @@ class CreateItems:
         wd.find_element_by_name("home").send_keys(contact.h_phone)
         wd.find_element_by_name("mobile").send_keys(contact.m_phone)
         wd.find_element_by_name("email").send_keys(contact.e_mail)
-        self.app.select_dob(contact.day_dob)
-        # wd.find_element_by_xpath("//div[@id='content']/form/select/option[8]").click()
-        self.app.select_mob(contact.month_dob)
-        # wd.find_element_by_xpath("//div[@id='content']/form/select[2]/option[5]").click()
+        select(wd.find_element_by_name("bday")).select_by_visible_text(contact.day_dob)
+        select(wd.find_element_by_name("bmonth")).select_by_visible_text(contact.month_dob)
         wd.find_element_by_name("byear").send_keys(contact.year_dob)
         # submitting form
         wd.find_element_by_name("submit").click()
