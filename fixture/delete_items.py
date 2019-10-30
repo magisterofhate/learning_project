@@ -10,8 +10,8 @@ class DeleteItems:
         # Submit deletion
         wd.find_element_by_name("delete").click()
 
-    # def delete_contact(self):
-    #     wd = self.app.wd
-    #     # Submit deletion
-    #     wd.find_element_by_name("delete").click()
+    def delete_contact(self):
+        wd = self.app.wd
+        # Submit deletion
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
 
