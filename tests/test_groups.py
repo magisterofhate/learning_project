@@ -12,6 +12,7 @@ def test_add_group(app):
 def test_del_group(app):
     app.navigation.home_page()
     app.navigation.group_list()
+    app.helpers.choose_rnd_el()
     app.delete_items.delete_group()
     app.navigation.group_list()
 
@@ -19,5 +20,6 @@ def test_del_group(app):
 def test_mod_group(app):
     app.navigation.home_page()
     app.navigation.group_list()
+    app.helpers.choose_rnd_el()
     app.modify_items.modify_group(Group("name12345678", "header78____AAAAAA", "footer_test____GGGGGG"))
     app.navigation.group_list()
