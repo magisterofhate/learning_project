@@ -21,6 +21,6 @@ class Helpers:
         list_users = wd.find_elements_by_xpath("//a[.//img[contains(@title, 'Edit')]]")
         # Choose rnd user in the list
         ed_usr = random.choice(list_users)
-        # debugging feature print(ed_usr.get_attribute('href'))
+        # Debugging feature print(ed_usr.get_attribute('href'))
         # Clicking on chosen element
         ed_usr.click()
