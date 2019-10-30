@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from fixture.create_items import CreateItems
 from fixture.navigation import Navigation
