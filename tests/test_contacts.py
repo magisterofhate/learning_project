@@ -11,5 +11,5 @@ from model.contact import Contact
 def test_modify_contact(app):
     app.navigation.home_page()
     app.helpers.choose_rnd_user()
-    app.modify_items.modify_contact(Contact(f_name="AAAAA" + str(x), l_name="BBBBB" + str(x), m_phone="+7886666666"))
+    app.modify_items.modify_contact(Contact(f_name="AAAAA", l_name="BBBBB", m_phone="+7886666666"))
     app.navigation.home_page()

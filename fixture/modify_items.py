@@ -40,4 +40,4 @@ class ModifyItems:
         wd.find_element_by_name("byear").clear()
         wd.find_element_by_name("byear").send_keys(contact.year_dob)
         # Submitting form
-        wd.find_element_by_name("update").click()
+        wd.find_element_by_xpath("//input[@value='Update']").click()
