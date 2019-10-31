@@ -1,4 +1,5 @@
 import random
+import string
 
 
 class Helpers:
@@ -24,3 +25,11 @@ class Helpers:
         # Debugging feature print(ed_usr.get_attribute('href'))
         # Clicking on chosen element
         ed_usr.click()
+
+    def confirm_on_popup(self):
+        wd = self.app.wd
+        wd.switch_to.alert.accept()
+
+    def rnd_string(self, length):
+        letters = string.ascii_letters
+        return ''.join(random.choice(letters) for i in range(length))

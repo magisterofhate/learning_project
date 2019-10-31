@@ -11,16 +11,16 @@ def test_add_group(app):
     app.navigation.logout()
 
 
-# def test_del_group(app):
-#     app.navigation.home_page()
-#     app.navigation.login()
-#     app.navigation.group_list()
-#     app.helpers.choose_rnd_el()
-#     app.delete_items.delete_group()
-#     app.navigation.group_list()
-#     app.navigation.logout()
-#
-#
+def test_del_group(app):
+    app.navigation.home_page()
+    app.navigation.login()
+    app.navigation.group_list()
+    app.helpers.choose_rnd_el()
+    app.delete_items.delete_group()
+    app.navigation.group_list()
+    app.navigation.logout()
+
+
 def test_mod_group(app):
     app.navigation.home_page()
     app.navigation.login()
