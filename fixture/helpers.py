@@ -1,5 +1,8 @@
 import random
 import string
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
 
 
 class Helpers:
@@ -33,3 +36,8 @@ class Helpers:
     def rnd_string(self, length):
         letters = string.ascii_letters
         return ''.join(random.choice(letters) for i in range(length))
+
+    def wait_for_element(self, path, timeout=10):
+        wait = WebDriverWait(self.app.wd, timeout)
+        wait.until(ec.visibility_of_element_located((By.XPATH, path)))
+
