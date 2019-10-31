@@ -1,4 +1,3 @@
-from fixture.helpers import Helpers
 
 
 class Navigation:
