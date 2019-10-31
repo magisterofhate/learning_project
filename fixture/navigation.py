@@ -1,6 +1,4 @@
-from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
+from fixture.helpers import Helpers
 
 
 class Navigation:
@@ -15,8 +13,7 @@ class Navigation:
 
     def logout(self):
         self.app.wd.find_element_by_link_text("Logout").click()
-        wait = WebDriverWait(self.app.wd, 10)
-        wait.until(ec.visibility_of_element_located((By.XPATH, "//input[@value='Login']")))
+        self.app.helpers.wait_for_element("//input[@value='Login']")
 
     def home_page(self):
         self.app.wd.get("http://10.201.48.35/addressbook/")

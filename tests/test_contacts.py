@@ -26,20 +26,20 @@ def test_modify_contact(app):
     app.navigation.logout()
 
 
-def test_delete_contact_from_edit_form(app):
-    app.navigation.home_page()
-    app.navigation.login()
-    app.helpers.choose_rnd_user()
-    app.delete_items.delete_contact()
-    app.navigation.home_page()
-    app.navigation.logout()
-
-
-def test_delete_contact_from_the_list(app):
-    app.navigation.home_page()
-    app.navigation.login()
-    app.helpers.choose_rnd_el()
-    app.delete_items.delete_contact()
-    app.helpers.confirm_on_popup()
-    app.navigation.logout()
+# def test_delete_contact_from_edit_form(app):
+#     app.navigation.home_page()
+#     app.navigation.login()
+#     app.helpers.choose_rnd_user()
+#     app.delete_items.delete_contact()
+#     app.navigation.home_page()
+#     app.navigation.logout()
+#
+#
+# def test_delete_contact_from_the_list(app):
+#     app.navigation.home_page()
+#     app.navigation.login()
+#     app.helpers.choose_rnd_el()
+#     app.delete_items.delete_contact()
+#     app.helpers.confirm_on_popup()
+#     app.navigation.logout()
 
