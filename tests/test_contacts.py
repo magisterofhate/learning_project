@@ -51,3 +51,4 @@ def test_delete_contact_from_the_list(app):
     app.delete_items.delete_contact()
     app.helpers.confirm_on_popup()
 
+

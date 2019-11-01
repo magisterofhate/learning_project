@@ -50,5 +50,6 @@ class Helpers:
 
     def check_elements_presented(self):
         wd = self.app.wd
+        self.wait_for_element("//body")
         if len(wd.find_elements_by_xpath("//input[@name='selected[]']")) == 0:
             return False
