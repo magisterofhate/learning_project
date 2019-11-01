@@ -6,6 +6,7 @@ class Navigation:
         self.app = app
 
     def login(self):
+        self.home_page()
         self.app.wd.find_element_by_name("user").send_keys('admin')
         self.app.wd.find_element_by_name("pass").send_keys('secret')
         self.app.wd.find_element_by_xpath("//input[@value='Login']").click()
