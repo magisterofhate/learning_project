@@ -41,3 +41,10 @@ class Helpers:
         wait = WebDriverWait(self.app.wd, timeout)
         wait.until(ec.visibility_of_element_located((By.XPATH, path)))
 
+    def is_session_valid(self):
+        try:
+            self.app.wd.current_url
+            return True
+        except:
+            return False
+

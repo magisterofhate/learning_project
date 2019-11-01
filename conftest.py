@@ -8,13 +8,13 @@ fixture = None
 
 
 @pytest.fixture
-def app(request):
+def app():
     global fixture
     if fixture is None:
         fixture = Application()
         fixture.navigation.login()
     else:
-        if not fixture.is_valid():
+        if not fixture.helpers.is_session_valid():
             fixture = Application()
             fixture.navigation.login()
     return fixture
