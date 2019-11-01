@@ -25,6 +25,7 @@ def test_delete_contact_from_edit_form(app):
     app.delete_items.delete_contact()
     app.navigation.home_page()
 
+
 def test_delete_contact_from_the_list(app):
     app.helpers.choose_rnd_el()
     app.delete_items.delete_contact()
