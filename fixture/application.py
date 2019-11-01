@@ -13,7 +13,7 @@ class Application:
     def __init__(self):
         self.wd = webdriver.Firefox()
         self.select = webdriver.support.ui.Select
-        self.wd.implicitly_wait(30)
+        self.wd.implicitly_wait(7)
         self.create_items = CreateItems(self)
         self.navigation = Navigation(self)
         self.delete_items = DeleteItems(self)
