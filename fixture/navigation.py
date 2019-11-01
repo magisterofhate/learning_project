@@ -34,7 +34,13 @@ class Navigation:
         return self.app.wd.find_elements_by_xpath("//form[@name='logout']/b") == "(" +user+ ")"
 
     def home_page(self):
-        self.app.wd.get("http://10.201.48.35/addressbook/")
+        wd = self.app.wd
+        if not ((wd.current_url.endswith("/addressbook/") or wd.current_url.endswith("/index.php")) and len(
+                wd.find_elements_by_xpath("//input[@value='Send e-Mail']")) > 0):
+            wd.get("http://10.201.48.35/addressbook/")
 
     def group_list(self):
-        self.app.wd.find_element_by_link_text("groups").click()
+        wd = self.app.wd
+        if not (wd.current_url.endswith("/group.php") and len(
+                wd.find_elements_by_xpath("//input[@value='Edit group']")) > 0):
+            wd.find_element_by_link_text("groups").click()
