@@ -1,3 +1,5 @@
+import random
+from model.contact import Contact
 
 
 class ContactOps:
@@ -52,3 +54,28 @@ class ContactOps:
         wd = self.app.wd
         # Submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
+
+    def choose_rnd_user_for_edit(self):
+        wd = self.app.wd
+        # Gather all elements in the list
+        list_users = wd.find_elements_by_xpath("//a[.//img[contains(@title, 'Edit')]]")
+        # Choose rnd user in the list
+        ed_usr = random.choice(list_users)
+        # Debugging feature print(ed_usr.get_attribute('href'))
+        # Clicking on chosen element
+        ed_usr.click()
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        c_list = wd.find_elements_by_xpath("//tr[@name='entry']")
+        contacts = []
+        for each in c_list:
+            c_id = int(each.find_element_by_xpath(".//td/input[@name='selected[]']").get_attribute("id"))
+            c_f_name = each.find_element_by_xpath("td[3]").text
+            c_l_name = each.find_element_by_xpath("td[2]").text
+            contacts.append(Contact(id=c_id, f_name=c_f_name, l_name=c_l_name))
+        return contacts
+
+    def find_max_id(self, contacts):
+        return sorted(contacts, reverse=True)[0].id
+
