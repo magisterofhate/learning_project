@@ -1,5 +1,8 @@
 import random
 from model.contact import Contact
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
 
 
 class ContactOps:
@@ -92,3 +95,13 @@ class ContactOps:
             contacts.append(Contact(id=c_id, f_name=c_f_name, l_name=c_l_name))
         return contacts
 
+    def find_usr_by_id(self, u_id):
+        wd = self.app.wd
+        self.app.navigation.home_page()
+        u_f_name = wd.find_element_by_xpath("//tr[.//input[contains(@value," + str(u_id) + ")]]/td[3]").text
+        u_l_name = wd.find_element_by_xpath("//tr[.//input[contains(@value," + str(u_id) + ")]]/td[2]").text
+        return Contact(id=u_id, l_name=u_l_name, f_name=u_f_name)
+
+    def wait_for_usr_del(self):
+        wait = WebDriverWait(self.app.wd, 10)
+        wait.until(ec.text_to_be_present_in_element((By.XPATH, "//div[@class='msgbox']"), "Record successful deleted"))
