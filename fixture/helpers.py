@@ -20,10 +20,9 @@ class Helpers:
         del_el = int(chosen_el.get_attribute("value"))
         return del_el
 
-    def click_rnd_el(self):
+    def click_rnd_el(self, e_id):
         wd = self.app.wd
-        e_id = self.choose_rnd_el()
-        del_el = wd.find_element_by_xpath("//input[@id=" + str(e_id) + "]")
+        del_el = wd.find_element_by_xpath("//input[@value=" + str(e_id) + "]")
         del_el.click()
 
     def confirm_on_popup(self):

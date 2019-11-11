@@ -44,3 +44,4 @@ class Navigation:
         if not (wd.current_url.endswith("/group.php") and len(
                 wd.find_elements_by_xpath("//input[@value='Edit group']")) > 0):
             wd.find_element_by_link_text("groups").click()
+        self.app.helpers.wait_for_element("//body")

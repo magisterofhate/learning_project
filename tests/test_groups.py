@@ -3,7 +3,6 @@
 
 def test_add_group(app):
     app.navigation.group_list()
-    app.helpers.wait_for_element("//body")
     old_group_list = app.go.get_group_list()
     new_id = app.helpers.eval_max_id(old_group_list)
     test_group = app.go.generate_group(new_id, True)
@@ -22,10 +21,15 @@ def test_del_group(app):
         app.go.create_group(new_group)
     app.navigation.group_list()
     old_group_list = app.go.get_group_list()
-    app.helpers.choose_rnd_el()
+    del_id = app.helpers.choose_rnd_el()
+    del_group = app.go.find_gr_by_id(del_id)
+    app.helpers.click_rnd_el(del_id)
     app.go.delete_group()
     app.navigation.group_list()
-
+    new_group_list = app.go.get_group_list()
+    assert len(new_group_list) == (len(old_group_list) - 1)
+    # assert sorted(new_group_list) == sorted(old_group_list)
+    assert del_group not in new_group_list
 
 # def test_mod_group(app):
 #     app.navigation.group_list()

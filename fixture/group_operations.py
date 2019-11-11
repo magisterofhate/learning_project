@@ -60,3 +60,9 @@ class GroupOps:
             g_name = each.text
             groups.append(Group(id=g_id, name=g_name))
         return groups
+
+    def find_gr_by_id(self, g_id):
+        wd = self.app.wd
+        self.app.navigation.group_list()
+        gr_name = wd.find_element_by_xpath("//span[.//input[contains(@value," + str(g_id) + ")]]").text
+        return Group(id=g_id, name=gr_name)
