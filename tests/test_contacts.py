@@ -3,7 +3,6 @@
 
 def test_add_contact(app):
     app.navigation.home_page()
-    app.helpers.wait_for_element("//body")
     old_contact_list = app.co.get_contact_list()
     new_id = app.helpers.eval_max_id(old_contact_list)
     test_contact = app.co.generate_contact(new_id, True)

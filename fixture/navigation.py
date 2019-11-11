@@ -38,6 +38,7 @@ class Navigation:
         if not ((wd.current_url.endswith("/addressbook/") or wd.current_url.endswith("/index.php")) and len(
                 wd.find_elements_by_xpath("//input[@value='Send e-Mail']")) > 0):
             wd.get("http://10.201.48.35/addressbook/")
+        self.app.helpers.wait_for_element("//body")
 
     def group_list(self):
         wd = self.app.wd
