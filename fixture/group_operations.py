@@ -60,11 +60,11 @@ class GroupOps:
             wd = self.app.wd
             self.app.navigation.group_list()
             g_list = wd.find_elements_by_xpath("//span[@class='group']")
-            group_cache = []
+            self.group_cache = []
             for each in g_list:
                 g_id = int(each.find_element_by_xpath(".//input[@name='selected[]']").get_attribute("value"))
                 g_name = each.text
-                group_cache.append(Group(id=g_id, name=g_name))
+                self.group_cache.append(Group(id=g_id, name=g_name))
         return list(self.group_cache)
 
     def find_gr_by_id(self, g_id):

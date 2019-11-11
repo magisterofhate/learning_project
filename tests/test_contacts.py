@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from time import sleep
 
 
 def test_add_contact(app):

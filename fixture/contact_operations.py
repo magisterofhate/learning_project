@@ -93,12 +93,12 @@ class ContactOps:
             wd = self.app.wd
             self.app.navigation.home_page()
             c_list = wd.find_elements_by_xpath("//tr[@name='entry']")
-            contacts_cache = []
+            self.contacts_cache = []
             for each in c_list:
                 c_id = int(each.find_element_by_xpath(".//td/input[@name='selected[]']").get_attribute("id"))
                 c_f_name = each.find_element_by_xpath("td[3]").text
                 c_l_name = each.find_element_by_xpath("td[2]").text
-                contacts_cache.append(Contact(id=c_id, f_name=c_f_name, l_name=c_l_name))
+                self.contacts_cache.append(Contact(id=c_id, f_name=c_f_name, l_name=c_l_name))
         return list(self.contacts_cache)
 
     def find_usr_by_id(self, u_id):
