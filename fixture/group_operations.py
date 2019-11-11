@@ -6,6 +6,8 @@ class GroupOps:
     def __init__(self, app):
         self.app = app
 
+    group_cache = None
+
     def generate_group(self, g_id=None, c_type=True):
         if c_type:
             new_name = self.app.helpers.rnd_string(15)
@@ -31,6 +33,7 @@ class GroupOps:
         wd.find_element_by_name("group_footer").send_keys(group.footer)
         # submit new group
         wd.find_element_by_name("submit").click()
+        self.group_cache = None
 
     def modify_group(self, group):
         wd = self.app.wd
@@ -44,22 +47,25 @@ class GroupOps:
         wd.find_element_by_name("group_footer").send_keys(group.footer)
         # Submit form
         wd.find_element_by_name("update").click()
+        self.group_cache = None
 
     def delete_group(self):
         wd = self.app.wd
         # Submit deletion
         wd.find_element_by_name("delete").click()
+        self.group_cache = None
 
     def get_group_list(self):
-        wd = self.app.wd
-        self.app.navigation.group_list()
-        g_list = wd.find_elements_by_xpath("//span[@class='group']")
-        groups = []
-        for each in g_list:
-            g_id = int(each.find_element_by_xpath(".//input[@name='selected[]']").get_attribute("value"))
-            g_name = each.text
-            groups.append(Group(id=g_id, name=g_name))
-        return groups
+        if self.group_cache is None:
+            wd = self.app.wd
+            self.app.navigation.group_list()
+            g_list = wd.find_elements_by_xpath("//span[@class='group']")
+            group_cache = []
+            for each in g_list:
+                g_id = int(each.find_element_by_xpath(".//input[@name='selected[]']").get_attribute("value"))
+                g_name = each.text
+                group_cache.append(Group(id=g_id, name=g_name))
+        return list(self.group_cache)
 
     def find_gr_by_id(self, g_id):
         wd = self.app.wd

@@ -10,6 +10,8 @@ class ContactOps:
     def __init__(self, app):
         self.app = app
 
+    contacts_cache = None
+
     def generate_contact(self, c_id=None, c_type=True):
         if c_type:
             new_f_name = self.app.helpers.rnd_string(7)
@@ -39,6 +41,7 @@ class ContactOps:
         wd.find_element_by_name("byear").send_keys(contact.year_dob)
         # submitting form
         wd.find_element_by_name("submit").click()
+        self.contacts_cache = None
 
     def modify_contact(self, contact):
         wd = self.app.wd
@@ -63,11 +66,13 @@ class ContactOps:
         wd.find_element_by_name("byear").send_keys(contact.year_dob)
         # Submitting form
         wd.find_element_by_xpath("//input[@value='Update']").click()
+        self.contacts_cache = None
 
     def delete_contact(self):
         wd = self.app.wd
         # Submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
+        self.contacts_cache = None
 
     def choose_rnd_user_for_edit(self):
         wd = self.app.wd
@@ -84,16 +89,17 @@ class ContactOps:
         rnd_el.click()
 
     def get_contact_list(self):
-        wd = self.app.wd
-        self.app.navigation.home_page()
-        c_list = wd.find_elements_by_xpath("//tr[@name='entry']")
-        contacts = []
-        for each in c_list:
-            c_id = int(each.find_element_by_xpath(".//td/input[@name='selected[]']").get_attribute("id"))
-            c_f_name = each.find_element_by_xpath("td[3]").text
-            c_l_name = each.find_element_by_xpath("td[2]").text
-            contacts.append(Contact(id=c_id, f_name=c_f_name, l_name=c_l_name))
-        return contacts
+        if self.contacts_cache is None:
+            wd = self.app.wd
+            self.app.navigation.home_page()
+            c_list = wd.find_elements_by_xpath("//tr[@name='entry']")
+            contacts_cache = []
+            for each in c_list:
+                c_id = int(each.find_element_by_xpath(".//td/input[@name='selected[]']").get_attribute("id"))
+                c_f_name = each.find_element_by_xpath("td[3]").text
+                c_l_name = each.find_element_by_xpath("td[2]").text
+                contacts_cache.append(Contact(id=c_id, f_name=c_f_name, l_name=c_l_name))
+        return list(self.contacts_cache)
 
     def find_usr_by_id(self, u_id):
         wd = self.app.wd
