@@ -7,6 +7,17 @@ class ContactOps:
     def __init__(self, app):
         self.app = app
 
+    def generate_contact(self, c_id, c_type=True):
+        if c_type:
+            new_f_name = self.app.helpers.rnd_string(7)
+            new_l_name = self.app.helpers.rnd_string(12)
+            new_id = c_id
+        else:
+            new_f_name = 'Andrey'
+            new_l_name = 'Romanov'
+            new_id = c_id
+        return Contact(id=new_id, f_name=new_f_name, l_name=new_l_name)
+
     def create_contact(self, contact):
         wd = self.app.wd
         select = self.app.select
@@ -67,7 +78,7 @@ class ContactOps:
 
     def get_contact_list(self):
         wd = self.app.wd
-        # na.home_page()
+        self.app.navigation.home_page()
         c_list = wd.find_elements_by_xpath("//tr[@name='entry']")
         contacts = []
         for each in c_list:

@@ -6,6 +6,15 @@ class GroupOps:
     def __init__(self, app):
         self.app = app
 
+    def generate_group(self, g_id, c_type=True):
+        if c_type:
+            new_name = self.app.helpers.rnd_string(15)
+            new_id = g_id
+        else:
+            new_name = 'New Custom Group'
+            new_id = g_id
+        return Group(id=new_id, name=new_name)
+
     def create_group(self, group):
         wd = self.app.wd
         # new group
@@ -43,7 +52,7 @@ class GroupOps:
 
     def get_group_list(self):
         wd = self.app.wd
-        # wd.navigation.group_list()
+        self.app.navigation.group_list()
         g_list = wd.find_elements_by_xpath("//span[@class='group']")
         groups = []
         for each in g_list:

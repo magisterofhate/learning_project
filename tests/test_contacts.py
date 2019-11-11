@@ -7,16 +7,11 @@ def test_add_contact(app):
     app.navigation.home_page()
     app.helpers.wait_for_element("//body")
     old_contact_list = app.co.get_contact_list()
-    if not app.co.get_contact_list():
-        new_id = maxsize
-    else:
-        new_id = app.helpers.find_max_id(app.co.get_contact_list()) + 1
-    new_f_name = app.helpers.rnd_string(7)
-    new_l_name = app.helpers.rnd_string(12)
-    app.co.create_contact(
-        Contact(f_name=new_f_name, l_name=new_l_name))
+    new_id = app.helpers.eval_max_id(old_contact_list)
+    test_contact = app.co.generate_contact(new_id, True)
+    app.co.create_contact(test_contact)
     app.navigation.home_page()
-    old_contact_list.append(Contact(id=new_id, f_name=new_f_name, l_name=new_l_name))
+    old_contact_list.append(test_contact)
     new_contact_list = app.co.get_contact_list()
     assert len(new_contact_list) == len(old_contact_list)
     assert sorted(new_contact_list) == sorted(old_contact_list)

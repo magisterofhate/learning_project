@@ -3,6 +3,7 @@ import string
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
+from sys import maxsize
 
 
 class Helpers:
@@ -46,3 +47,10 @@ class Helpers:
 
     def find_max_id(self, item_list):
         return sorted(item_list, reverse=True)[0].id
+
+    def eval_max_id(self, item_list):
+        if not item_list:
+            new_id = maxsize
+        else:
+            new_id = self.app.helpers.find_max_id(item_list) + 1
+        return new_id
