@@ -7,7 +7,7 @@ class ContactOps:
     def __init__(self, app):
         self.app = app
 
-    def generate_contact(self, c_id, c_type=True):
+    def generate_contact(self, c_id=None, c_type=True):
         if c_type:
             new_f_name = self.app.helpers.rnd_string(7)
             new_l_name = self.app.helpers.rnd_string(12)

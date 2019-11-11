@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from model.group import Group
 
 
 def test_add_group(app):
@@ -15,20 +14,19 @@ def test_add_group(app):
     assert len(new_group_list) == len(old_group_list)
     assert sorted(new_group_list) == sorted(old_group_list)
 
-    # app.go.create_group(Group("name777", "header78", "footer_test"))
-    # app.navigation.group_list()
+
+def test_del_group(app):
+    app.navigation.group_list()
+    if app.helpers.check_elements_presented() is False:
+        new_group = app.go.generate_group(True)
+        app.go.create_group(new_group)
+    app.navigation.group_list()
+    old_group_list = app.go.get_group_list()
+    app.helpers.choose_rnd_el()
+    app.go.delete_group()
+    app.navigation.group_list()
 
 
-# def test_del_group(app):
-#     app.navigation.group_list()
-#     if app.helpers.check_elements_presented() is False:
-#         app.go.create_group(Group("name777", "header78", "footer_test"))
-#     app.navigation.group_list()
-#     app.helpers.choose_rnd_el()
-#     app.go.delete_group()
-#     app.navigation.group_list()
-#
-#
 # def test_mod_group(app):
 #     app.navigation.group_list()
 #     if app.helpers.check_elements_presented() is False:

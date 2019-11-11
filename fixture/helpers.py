@@ -16,8 +16,14 @@ class Helpers:
         # Gather all elements in the list
         list_elements = wd.find_elements_by_name("selected[]")
         # Choose rnd element in the list
-        del_el = random.choice(list_elements)
-        # Clicking on chosen element
+        chosen_el = random.choice(list_elements)
+        del_el = int(chosen_el.get_attribute("value"))
+        return del_el
+
+    def click_rnd_el(self):
+        wd = self.app.wd
+        e_id = self.choose_rnd_el()
+        del_el = wd.find_element_by_xpath("//input[@id=" + str(e_id) + "]")
         del_el.click()
 
     def confirm_on_popup(self):

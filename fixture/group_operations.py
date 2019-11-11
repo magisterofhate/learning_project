@@ -6,7 +6,7 @@ class GroupOps:
     def __init__(self, app):
         self.app = app
 
-    def generate_group(self, g_id, c_type=True):
+    def generate_group(self, g_id=None, c_type=True):
         if c_type:
             new_name = self.app.helpers.rnd_string(15)
             new_id = g_id
