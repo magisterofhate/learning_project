@@ -17,13 +17,13 @@ class Helpers:
         list_elements = wd.find_elements_by_name("selected[]")
         # Choose rnd element in the list
         chosen_el = random.choice(list_elements)
-        del_el = int(chosen_el.get_attribute("value"))
-        return del_el
+        rnd_el_id = int(chosen_el.get_attribute("value"))
+        return rnd_el_id
 
     def click_rnd_el(self, e_id):
         wd = self.app.wd
-        del_el = wd.find_element_by_xpath("//input[@value=" + str(e_id) + "]")
-        del_el.click()
+        rnd_el = wd.find_element_by_xpath("//input[@value=" + str(e_id) + "]")
+        rnd_el.click()
 
     def confirm_on_popup(self):
         wd = self.app.wd

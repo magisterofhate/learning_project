@@ -69,12 +69,16 @@ class ContactOps:
     def choose_rnd_user_for_edit(self):
         wd = self.app.wd
         # Gather all elements in the list
-        list_users = wd.find_elements_by_xpath("//a[.//img[contains(@title, 'Edit')]]")
+        list_users = wd.find_elements_by_name("selected[]")
         # Choose rnd user in the list
-        ed_usr = random.choice(list_users)
-        # Debugging feature print(ed_usr.get_attribute('href'))
-        # Clicking on chosen element
-        ed_usr.click()
+        chosen_el = random.choice(list_users)
+        rnd_el_id = int(chosen_el.get_attribute("value"))
+        return rnd_el_id
+
+    def click_rnd_user_for_edit(self, u_id):
+        wd = self.app.wd
+        rnd_el = wd.find_element_by_xpath("//a[@href='edit.php?id=" + str(u_id) + "']")
+        rnd_el.click()
 
     def get_contact_list(self):
         wd = self.app.wd
