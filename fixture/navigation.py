@@ -31,7 +31,7 @@ class Navigation:
          self.login(user, pwd)
 
     def is_logged_in_as(self, user):
-        return self.app.wd.find_elements_by_xpath("//form[@name='logout']/b") == "(" +user+ ")"
+        return self.app.wd.find_elements_by_xpath("//form[@name='logout']/b") == "(" + user + ")"
 
     def home_page(self):
         wd = self.app.wd

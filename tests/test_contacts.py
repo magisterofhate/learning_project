@@ -10,7 +10,7 @@ def test_add_contact(app):
     if not app.co.get_contact_list():
         new_id = maxsize
     else:
-        new_id = app.co.find_max_id(app.co.get_contact_list()) + 1
+        new_id = app.helpers.find_max_id(app.co.get_contact_list()) + 1
     new_f_name = app.helpers.rnd_string(7)
     new_l_name = app.helpers.rnd_string(12)
     app.co.create_contact(

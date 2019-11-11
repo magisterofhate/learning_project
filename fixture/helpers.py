@@ -43,3 +43,6 @@ class Helpers:
         self.wait_for_element("//body")
         if len(wd.find_elements_by_xpath("//input[@name='selected[]']")) == 0:
             return False
+
+    def find_max_id(self, item_list):
+        return sorted(item_list, reverse=True)[0].id

@@ -67,6 +67,7 @@ class ContactOps:
 
     def get_contact_list(self):
         wd = self.app.wd
+        # na.home_page()
         c_list = wd.find_elements_by_xpath("//tr[@name='entry']")
         contacts = []
         for each in c_list:
@@ -75,7 +76,4 @@ class ContactOps:
             c_l_name = each.find_element_by_xpath("td[2]").text
             contacts.append(Contact(id=c_id, f_name=c_f_name, l_name=c_l_name))
         return contacts
-
-    def find_max_id(self, contacts):
-        return sorted(contacts, reverse=True)[0].id
 

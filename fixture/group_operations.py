@@ -1,3 +1,4 @@
+from model.group import Group
 
 
 class GroupOps:
@@ -39,3 +40,14 @@ class GroupOps:
         wd = self.app.wd
         # Submit deletion
         wd.find_element_by_name("delete").click()
+
+    def get_group_list(self):
+        wd = self.app.wd
+        # wd.navigation.group_list()
+        g_list = wd.find_elements_by_xpath("//span[@class='group']")
+        groups = []
+        for each in g_list:
+            g_id = int(each.find_element_by_xpath(".//input[@name='selected[]']").get_attribute("value"))
+            g_name = each.text
+            groups.append(Group(id=g_id, name=g_name))
+        return groups
