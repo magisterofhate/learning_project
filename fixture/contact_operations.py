@@ -17,11 +17,16 @@ class ContactOps:
             new_f_name = self.app.helpers.rnd_string(7)
             new_l_name = self.app.helpers.rnd_string(12)
             new_id = c_id
+            new_m_tel = '+7' + str(random.randint(1111111111, 9999999999))
+            new_e_mail = self.app.helpers.rnd_string(7) + '@' + self.app.helpers.rnd_string(4) + '.' \
+                         + self.app.helpers.rnd_string(2)
         else:
             new_f_name = 'Andrey'
             new_l_name = 'Romanov'
             new_id = c_id
-        return Contact(id=new_id, f_name=new_f_name, l_name=new_l_name)
+            new_m_tel = '+79874561234'
+            new_e_mail = 'and.romanov@gmail.com'
+        return Contact(id=new_id, f_name=new_f_name, l_name=new_l_name, m_phone=new_m_tel, e_mail=new_e_mail)
 
     def create_contact(self, contact):
         wd = self.app.wd
@@ -98,7 +103,10 @@ class ContactOps:
                 c_id = int(each.find_element_by_xpath(".//td/input[@name='selected[]']").get_attribute("id"))
                 c_f_name = each.find_element_by_xpath("td[3]").text
                 c_l_name = each.find_element_by_xpath("td[2]").text
-                self.contacts_cache.append(Contact(id=c_id, f_name=c_f_name, l_name=c_l_name))
+                c_e_mail = each.find_element_by_xpath("td[5]").text
+                c_m_phone = each.find_element_by_xpath("td[6]").text
+                self.contacts_cache.append(Contact(id=c_id, f_name=c_f_name, l_name=c_l_name, e_mail=c_e_mail,
+                                                   m_phone=c_m_phone))
         return list(self.contacts_cache)
 
     def find_usr_by_id(self, u_id):
