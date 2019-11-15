@@ -146,9 +146,6 @@ class ContactOps:
         wait = WebDriverWait(self.app.wd, 10)
         wait.until(ec.text_to_be_present_in_element((By.XPATH, "//div[@class='msgbox']"), "Record successful deleted"))
 
-    def open_edit_contact_form(self, c_id):
-
-
     def get_full_contact_info_from_edit_page(self, c_id):
         wd = self.app.wd
         self.app.navigation.home_page()
@@ -167,6 +164,3 @@ class ContactOps:
         email3 = wd.find_element_by_name("email3").get_attribute("value")
         return Contact(id=id, f_name=fname, l_name=lname, m_name=mname, addr=addr, h_phone=hphone, m_phone=mphone,
                        w_phone=wphone, s_phone=sphone, e_mail1=email1, e_mail2=email2, e_mail3=email3)
-
-
-
