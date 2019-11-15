@@ -22,7 +22,7 @@ def test_modify_contact(app):
         app.co.create_contact(new_contact)
     app.navigation.home_page()
     old_contact_list = app.co.get_contact_list()
-    usr_id = app.co.choose_rnd_user_for_edit()
+    usr_id = app.helpers.choose_rnd_el()
     app.co.click_user_for_edit(usr_id)
     mod_contact = app.co.generate_contact(usr_id, True)
     app.co.modify_contact(mod_contact)
