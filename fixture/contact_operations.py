@@ -16,17 +16,31 @@ class ContactOps:
         if c_type:
             new_f_name = self.app.helpers.rnd_string(7)
             new_l_name = self.app.helpers.rnd_string(12)
+            new_m_name = self.app.helpers.rnd_string(4)
             new_id = c_id
-            new_m_tel = '+7' + str(random.randint(1111111111, 9999999999))
-            new_e_mail = self.app.helpers.rnd_string(7) + '@' + self.app.helpers.rnd_string(4) + '.' \
+            new_addr = self.app.helpers.rnd_big_text_field()
+            phone_numbers = []
+            e_mails = []
+            for i in range(1, 5):
+                gen_phone_num = '+7' + str(random.randint(1111111111, 9999999999))
+                phone_numbers.append(random.choice([gen_phone_num, ""]))
+
+            for i in range(1, 5):
+                gen_e_mail = self.app.helpers.rnd_string(7) + '@' + self.app.helpers.rnd_string(4) + '.' \
                          + self.app.helpers.rnd_string(2)
+                e_mails.append(random.choice([gen_e_mail, ""]))
         else:
             new_f_name = 'Andrey'
             new_l_name = 'Romanov'
             new_id = c_id
-            new_m_tel = '+79874561234'
-            new_e_mail = 'and.romanov@gmail.com'
-        return Contact(id=new_id, f_name=new_f_name, l_name=new_l_name, m_phone=new_m_tel, e_mail=new_e_mail)
+            new_m_name = 'S'
+            new_addr = 'Default City'
+            phone_numbers = ['+79874561234', '79874565678']
+            e_mails = ['and.romanov@gmail.com']
+        return Contact(id=new_id, f_name=new_f_name, l_name=new_l_name, m_name=new_m_name, addr=new_addr,
+                       h_phone=phone_numbers[0],
+                       m_phone=phone_numbers[1], w_phone=phone_numbers[2], s_phone=phone_numbers[3],
+                       e_mail1=e_mails[0], e_mail2=e_mails[1], e_mail3=e_mails[2])
 
     def create_contact(self, contact):
         wd = self.app.wd
@@ -37,10 +51,15 @@ class ContactOps:
         # form fulfilment
         wd.find_element_by_name("firstname").send_keys(contact.f_name)
         wd.find_element_by_name("lastname").send_keys(contact.l_name)
+        wd.find_element_by_name("middlename").send_keys(contact.m_name)
         wd.find_element_by_name("address").send_keys(contact.addr)
         wd.find_element_by_name("home").send_keys(contact.h_phone)
         wd.find_element_by_name("mobile").send_keys(contact.m_phone)
-        wd.find_element_by_name("email").send_keys(contact.e_mail)
+        wd.find_element_by_name("work").send_keys(contact.w_phone)
+        wd.find_element_by_name("phone2").send_keys(contact.s_phone)
+        wd.find_element_by_name("email").send_keys(contact.e_mail1)
+        wd.find_element_by_name("email2").send_keys(contact.e_mail2)
+        wd.find_element_by_name("email3").send_keys(contact.e_mail3)
         select(wd.find_element_by_name("bday")).select_by_visible_text(contact.day_dob)
         select(wd.find_element_by_name("bmonth")).select_by_visible_text(contact.month_dob)
         wd.find_element_by_name("byear").send_keys(contact.year_dob)
@@ -57,14 +76,24 @@ class ContactOps:
         wd.find_element_by_name("firstname").send_keys(contact.f_name)
         wd.find_element_by_name("lastname").clear()
         wd.find_element_by_name("lastname").send_keys(contact.l_name)
+        wd.find_element_by_name("middlename").clear()
+        wd.find_element_by_name("middlename").send_keys(contact.m_name)
         wd.find_element_by_name("address").clear()
         wd.find_element_by_name("address").send_keys(contact.addr)
         wd.find_element_by_name("home").clear()
         wd.find_element_by_name("home").send_keys(contact.h_phone)
         wd.find_element_by_name("mobile").clear()
         wd.find_element_by_name("mobile").send_keys(contact.m_phone)
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(contact.e_mail)
+        wd.find_element_by_name("work").clear()
+        wd.find_element_by_name("work").send_keys(contact.w_phone)
+        wd.find_element_by_name("phone2").clear()
+        wd.find_element_by_name("phone2").send_keys(contact.s_phone)
+        wd.find_element_by_name("email1").clear()
+        wd.find_element_by_name("email1").send_keys(contact.e_mail1)
+        wd.find_element_by_name("email2").clear()
+        wd.find_element_by_name("email2").send_keys(contact.e_mail2)
+        wd.find_element_by_name("email3").clear()
+        wd.find_element_by_name("email3").send_keys(contact.e_mail3)
         select(wd.find_element_by_name("bday")).select_by_visible_text(contact.day_dob)
         select(wd.find_element_by_name("bmonth")).select_by_visible_text(contact.month_dob)
         wd.find_element_by_name("byear").clear()
@@ -79,16 +108,16 @@ class ContactOps:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         self.contacts_cache = None
 
-    def choose_rnd_user_for_edit(self):
-        wd = self.app.wd
-        # Gather all elements in the list
-        list_users = wd.find_elements_by_name("selected[]")
-        # Choose rnd user in the list
-        chosen_el = random.choice(list_users)
-        rnd_el_id = int(chosen_el.get_attribute("value"))
-        return rnd_el_id
+    # def choose_rnd_user_for_edit(self):
+    #     wd = self.app.wd
+    #     # Gather all elements in the list
+    #     list_users = wd.find_elements_by_name("selected[]")
+    #     # Choose rnd user in the list
+    #     chosen_el = random.choice(list_users)
+    #     rnd_el_id = int(chosen_el.get_attribute("value"))
+    #     return rnd_el_id
 
-    def click_rnd_user_for_edit(self, u_id):
+    def click_user_for_edit(self, u_id):
         wd = self.app.wd
         rnd_el = wd.find_element_by_xpath("//a[@href='edit.php?id=" + str(u_id) + "']")
         rnd_el.click()
@@ -103,10 +132,7 @@ class ContactOps:
                 c_id = int(each.find_element_by_xpath(".//td/input[@name='selected[]']").get_attribute("id"))
                 c_f_name = each.find_element_by_xpath("td[3]").text
                 c_l_name = each.find_element_by_xpath("td[2]").text
-                c_e_mail = each.find_element_by_xpath("td[5]").text
-                c_m_phone = each.find_element_by_xpath("td[6]").text
-                self.contacts_cache.append(Contact(id=c_id, f_name=c_f_name, l_name=c_l_name, e_mail=c_e_mail,
-                                                   m_phone=c_m_phone))
+                self.contacts_cache.append(Contact(id=c_id, f_name=c_f_name, l_name=c_l_name))
         return list(self.contacts_cache)
 
     def find_usr_by_id(self, u_id):
@@ -119,3 +145,28 @@ class ContactOps:
     def wait_for_usr_del(self):
         wait = WebDriverWait(self.app.wd, 10)
         wait.until(ec.text_to_be_present_in_element((By.XPATH, "//div[@class='msgbox']"), "Record successful deleted"))
+
+    def open_edit_contact_form(self, c_id):
+
+
+    def get_full_contact_info_from_edit_page(self, c_id):
+        wd = self.app.wd
+        self.app.navigation.home_page()
+        self.click_user_for_edit(c_id)
+        id = wd.find_element_by_name("id").get_attribute("value")
+        fname = wd.find_element_by_name("firstname").get_attribute("value")
+        lname = wd.find_element_by_name("lastname").get_attribute("value")
+        mname = wd.find_element_by_name("middlename").get_attribute("value")
+        addr = wd.find_element_by_name("address").get_attribute("value")
+        hphone = wd.find_element_by_name("home").get_attribute("value")
+        mphone = wd.find_element_by_name("mobile").get_attribute("value")
+        wphone = wd.find_element_by_name("work").get_attribute("value")
+        sphone = wd.find_element_by_name("phone2").get_attribute("value")
+        email1 = wd.find_element_by_name("email").get_attribute("value")
+        email2 = wd.find_element_by_name("email2").get_attribute("value")
+        email3 = wd.find_element_by_name("email3").get_attribute("value")
+        return Contact(id=id, f_name=fname, l_name=lname, m_name=mname, addr=addr, h_phone=hphone, m_phone=mphone,
+                       w_phone=wphone, s_phone=sphone, e_mail1=email1, e_mail2=email2, e_mail3=email3)
+
+
+

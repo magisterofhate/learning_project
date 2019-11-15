@@ -33,6 +33,12 @@ class Helpers:
         letters = string.ascii_letters
         return ''.join(random.choice(letters) for i in range(length))
 
+    def rnd_big_text_field(self):
+        let = string.ascii_letters
+        dig = string.digits
+        n = "\n"
+        return ''.join(random.choice([random.choice(let), random.choice(dig), n]) for i in range(50))
+
     def wait_for_element(self, path, timeout=10):
         wait = WebDriverWait(self.app.wd, timeout)
         wait.until(ec.visibility_of_element_located((By.XPATH, path)))
