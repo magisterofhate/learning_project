@@ -164,3 +164,14 @@ class ContactOps:
         email3 = wd.find_element_by_name("email3").get_attribute("value")
         return Contact(id=id, f_name=fname, l_name=lname, m_name=mname, addr=addr, h_phone=hphone, m_phone=mphone,
                        w_phone=wphone, s_phone=sphone, e_mail1=email1, e_mail2=email2, e_mail3=email3)
+
+    def get_full_contact_info_from_main_page(self, c_id):
+        wd = self.app.wd
+        self.app.navigation.home_page()
+        fname = wd.find_element_by_xpath("//tr[.//input[contains(@value," + str(c_id) + ")]]/td[3]").text
+        lname = wd.find_element_by_xpath("//tr[.//input[contains(@value," + str(c_id) + ")]]/td[2]").text
+        addr = wd.find_element_by_xpath("//tr[.//input[contains(@value," + str(c_id) + ")]]/td[4]").text
+        e_mails = wd.find_element_by_xpath("//tr[.//input[contains(@value," + str(c_id) + ")]]/td[5]").text
+        phones = wd.find_element_by_xpath("//tr[.//input[contains(@value," + str(c_id) + ")]]/td[6]").text
+        info = [fname, lname, addr, e_mails, phones]
+        return info
