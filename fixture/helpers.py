@@ -30,7 +30,7 @@ class Helpers:
         wd.switch_to.alert.accept()
 
     def rnd_string(self, length):
-        symbols = string.ascii_letters + " " + string.digits
+        symbols = string.ascii_letters + " "*10 + string.digits
         return ''.join(random.choice(symbols) for i in range(random.randrange(length)))
 
     def rnd_big_text_field(self):
