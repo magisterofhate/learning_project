@@ -2,17 +2,16 @@
 
 
 def test_add_contact(app):
-    for i in range(1, 11):
-        app.navigation.home_page()
-        old_contact_list = app.co.get_contact_list()
-        new_id = app.helpers.eval_max_id(old_contact_list)
-        test_contact = app.co.generate_contact(new_id, True)
-        app.co.create_contact(test_contact)
-        app.navigation.home_page()
-        old_contact_list.append(test_contact)
-        new_contact_list = app.co.get_contact_list()
-        assert len(new_contact_list) == len(old_contact_list)
-        assert sorted(new_contact_list) == sorted(old_contact_list)
+    app.navigation.home_page()
+    old_contact_list = app.co.get_contact_list()
+    new_id = app.helpers.eval_max_id(old_contact_list)
+    test_contact = app.co.generate_contact(new_id, True)
+    app.co.create_contact(test_contact)
+    app.navigation.home_page()
+    old_contact_list.append(test_contact)
+    new_contact_list = app.co.get_contact_list()
+    assert len(new_contact_list) == len(old_contact_list)
+    assert sorted(new_contact_list) == sorted(old_contact_list)
 
 
 def test_modify_contact(app):
