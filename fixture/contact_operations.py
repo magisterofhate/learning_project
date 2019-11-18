@@ -3,6 +3,7 @@ from model.contact import Contact
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
+import re
 
 
 class ContactOps:
@@ -108,15 +109,6 @@ class ContactOps:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         self.contacts_cache = None
 
-    # def choose_rnd_user_for_edit(self):
-    #     wd = self.app.wd
-    #     # Gather all elements in the list
-    #     list_users = wd.find_elements_by_name("selected[]")
-    #     # Choose rnd user in the list
-    #     chosen_el = random.choice(list_users)
-    #     rnd_el_id = int(chosen_el.get_attribute("value"))
-    #     return rnd_el_id
-
     def click_user_for_edit(self, u_id):
         wd = self.app.wd
         rnd_el = wd.find_element_by_xpath("//a[@href='edit.php?id=" + str(u_id) + "']")
@@ -175,3 +167,17 @@ class ContactOps:
         phones = wd.find_element_by_xpath("//tr[.//input[contains(@value," + str(c_id) + ")]]/td[6]").text
         info = [fname, lname, addr, e_mails, phones]
         return info
+
+    def clear_phones(self, s):
+        return re.sub("[() -]", "", s)
+
+    def get_contact_email_list(self, contact):
+        return '\n'.join(filter(lambda x: x != '',
+                                filter(lambda x: x is not None, [contact.e_mail1, contact.e_mail2, contact.e_mail3])))
+
+    def get_contact_phone_list(self, contact):
+        return '\n'.join(filter(lambda x: x != '',
+                                map(lambda x: self.clear_phones(x),
+                                    filter(lambda x: x is not None,
+                                           [contact.h_phone, contact.m_phone, contact.w_phone, contact.s_phone]))))
+
