@@ -168,6 +168,9 @@ class ContactOps:
         info = [fname, lname, addr, e_mails, phones]
         return info
 
+    def clear_addresses(self, s):
+        return re.sub("\n", "", s)
+
     def clear_phones(self, s):
         return re.sub("[() -]", "", s)
 

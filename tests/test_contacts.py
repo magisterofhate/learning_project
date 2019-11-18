@@ -68,11 +68,11 @@ def test_delete_contact_from_the_list(app):
 
 def test_all_info_from_main_page_match_info_from_edit_page(app):
     app.navigation.home_page()
-    test_id = app.helpers.choose_rnd_el()
-    test_contact = app.co.get_full_contact_info_from_edit_page(test_id)
-    main_page_info = app.co.get_full_contact_info_from_main_page(test_id)
+    # test_id = app.helpers.choose_rnd_el()
+    test_contact = app.co.get_full_contact_info_from_edit_page(153)
+    main_page_info = app.co.get_full_contact_info_from_main_page(153)
     assert test_contact.f_name == main_page_info[0]
     assert test_contact.l_name == main_page_info[1]
-    assert test_contact.addr == main_page_info[2]
+    assert app.co.clear_addresses(test_contact.addr) == app.co.clear_addresses(main_page_info[2])
     assert app.co.get_contact_email_list(test_contact) == main_page_info[3]
     assert app.co.get_contact_phone_list(test_contact) == main_page_info[4]
