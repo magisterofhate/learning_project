@@ -10,9 +10,9 @@ class GroupOps:
 
     def generate_group(self, g_id=None, c_type=True):
         if c_type:
-            new_name = self.app.helpers.rnd_string(15)
-            new_head = self.app.helpers.rnd_string(25)
-            new_foot = self.app.helpers.rnd_string(25)
+            new_name = self.app.helpers.rnd_string()
+            new_head = self.app.helpers.rnd_string()
+            new_foot = self.app.helpers.rnd_string()
             new_id = g_id
         else:
             new_name = 'New Custom Group'

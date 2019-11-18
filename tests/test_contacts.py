@@ -1,11 +1,23 @@
 # -*- coding: utf-8 -*-
+import pytest
+from sys import maxsize
+from fixture.application import Application
+
+q = Application()
+
+test_data = [
+    q.co.generate_contact(maxsize, True)
+    for i in range(10)
+]
+
+q.destroy()
 
 
-def test_add_contact(app):
+@pytest.mark.parametrize("contact", test_data, ids=[repr(x) for x in test_data])
+def test_add_contact(app, contact):
     app.navigation.home_page()
     old_contact_list = app.co.get_contact_list()
-    new_id = app.helpers.eval_max_id(old_contact_list)
-    test_contact = app.co.generate_contact(new_id, True)
+    test_contact = contact
     app.co.create_contact(test_contact)
     app.navigation.home_page()
     old_contact_list.append(test_contact)
@@ -71,8 +83,8 @@ def test_all_info_from_main_page_match_info_from_edit_page(app):
     test_id = app.helpers.choose_rnd_el()
     test_contact = app.co.get_full_contact_info_from_edit_page(test_id)
     main_page_info = app.co.get_full_contact_info_from_main_page(test_id)
-    assert test_contact.f_name == main_page_info[0]
-    assert test_contact.l_name == main_page_info[1]
+    assert app.co.clear_names(test_contact.f_name) == main_page_info[0]
+    assert app.co.clear_names(test_contact.l_name) == main_page_info[1]
     assert app.co.clear_addresses(test_contact.addr) == app.co.clear_addresses(main_page_info[2])
     assert app.co.get_contact_email_list(test_contact) == main_page_info[3]
     assert app.co.get_contact_phone_list(test_contact) == main_page_info[4]
