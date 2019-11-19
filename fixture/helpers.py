@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from sys import maxsize
+import re
 
 
 class Helpers:
@@ -65,3 +66,6 @@ class Helpers:
         else:
             new_id = self.app.helpers.find_max_id(item_list) + 1
         return new_id
+
+    def clear_data(self, s):
+        return re.sub("\s{2,}", " ", s.strip(' '))
