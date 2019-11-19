@@ -15,9 +15,9 @@ class ContactOps:
 
     def generate_contact(self, c_id=None, c_type=True):
         if c_type:
-            new_f_name = self.clear_names(self.app.helpers.rnd_string(20))
-            new_l_name = self.clear_names(self.app.helpers.rnd_string(30))
-            new_m_name = self.clear_names(self.app.helpers.rnd_string(20))
+            new_f_name = self.clear_data(self.app.helpers.rnd_string(20))
+            new_l_name = self.clear_data(self.app.helpers.rnd_string(30))
+            new_m_name = self.clear_data(self.app.helpers.rnd_string(20))
             new_id = c_id
             new_addr = self.app.helpers.rnd_big_text_field()
             phone_numbers = []
@@ -27,8 +27,8 @@ class ContactOps:
                 phone_numbers.append(random.choice([gen_phone_num, ""]))
 
             for i in range(1, 5):
-                gen_e_mail = re.sub("[ ]", "", self.app.helpers.rnd_string(10) + '@'
-                                    + self.app.helpers.rnd_string(10) + '.' + self.app.helpers.rnd_string(3))
+                gen_e_mail = self.clear_data(self.app.helpers.rnd_string(10) + '@'
+                                             + self.app.helpers.rnd_string(10) + '.' + self.app.helpers.rnd_string(3))
                 e_mails.append(random.choice([gen_e_mail, ""]))
         else:
             new_f_name = 'Andrey'
@@ -174,7 +174,7 @@ class ContactOps:
     def clear_phones(self, s):
         return re.sub("[() -]", "", s)
 
-    def clear_names(self, s):
+    def clear_data(self, s):
         return re.sub("\s{2,}", " ", s.strip(' '))
 
     def get_contact_email_list(self, contact):
