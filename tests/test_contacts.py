@@ -7,7 +7,7 @@ q = Application()
 
 test_data = [
     q.co.generate_contact(maxsize, True)
-    for i in range(10)
+    for i in range(5)
 ]
 
 q.destroy()

@@ -1,11 +1,25 @@
 # -*- coding: utf-8 -*-
+import pytest
+from sys import maxsize
+from fixture.application import Application
+
+q = Application()
+
+test_data = [
+    q.go.generate_group(maxsize, True)
+    for i in range(5)
+]
+
+q.destroy()
 
 
-def test_add_group(app):
+@pytest.mark.parametrize("group", test_data, ids=[repr(x) for x in test_data])
+def test_add_group(app, group):
     app.navigation.group_list()
     old_group_list = app.go.get_group_list()
-    new_id = app.helpers.eval_max_id(old_group_list)
-    test_group = app.go.generate_group(new_id, True)
+    # new_id = app.helpers.eval_max_id(old_group_list)
+    # test_group = app.go.generate_group(new_id, True)
+    test_group = group
     app.go.create_group(test_group)
     app.navigation.group_list()
     old_group_list.append(test_group)
