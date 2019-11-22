@@ -1,24 +1,28 @@
 # -*- coding: utf-8 -*-
 
 import pytest
+import json
+import os.path
 from fixture.application import Application
 
 
 fixture = None
-
+config = None
 
 @pytest.fixture
 def app(request):
     global fixture
-    browser = request.config.getoption("--browser")
-    base_url = request.config.getoption("--baseUrl")
-    if fixture is None:
-        fixture = Application(browser=browser, base_url=base_url)
-        fixture.navigation.int_login('admin', 'secret')
-    else:
-        if not fixture.helpers.is_session_valid():
-            fixture = Application(browser=browser, base_url=base_url)
-            fixture.navigation.int_login('admin', 'secret')
+    global config
+    dir_path = request.config.getoption("--file")
+    file_path = os.path.join(dir_path, "cfg_file.json")
+
+    if config is None:
+        with open(file_path) as f:
+            config = json.load(f)
+
+    if fixture is None or not fixture.helpers.is_session_valid():
+        fixture = Application(browser=config['browser'], base_url=config['baseUrl'])
+        fixture.navigation.int_login(config['username'], config['password'])
     return fixture
 
 
@@ -32,5 +36,4 @@ def stop(request):
 
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="ff")
-    parser.addoption("--baseUrl", action="store", default="http://10.201.48.35/addressbook/")
+    parser.addoption("--file", action="store", default="C:/Anatoly_Milinevsky/learning_project/")

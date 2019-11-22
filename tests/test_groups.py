@@ -7,7 +7,7 @@ q = Application()
 
 test_data = [
     q.go.generate_group(maxsize, True)
-    for i in range(5)
+    for i in range(1)
 ]
 
 q.destroy()
@@ -17,8 +17,6 @@ q.destroy()
 def test_add_group(app, group):
     app.navigation.group_list()
     old_group_list = app.go.get_group_list()
-    # new_id = app.helpers.eval_max_id(old_group_list)
-    # test_group = app.go.generate_group(new_id, True)
     test_group = group
     app.go.create_group(test_group)
     app.navigation.group_list()
