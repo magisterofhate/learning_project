@@ -1,4 +1,6 @@
 import random
+
+from fixture.common import rnd_string, rnd_big_text_field, clear_data
 from model.contact import Contact
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
@@ -17,11 +19,11 @@ class ContactOps:
 
     def generate_contact(self, c_id=None, c_type=True):
         if c_type:
-            new_f_name = self.helpers.clear_data(self.helpers.rnd_string(20))
-            new_l_name = self.helpers.clear_data(self.helpers.rnd_string(30))
-            new_m_name = self.helpers.clear_data(self.helpers.rnd_string(20))
+            new_f_name = clear_data(rnd_string(20))
+            new_l_name = clear_data(rnd_string(30))
+            new_m_name = clear_data(rnd_string(20))
             new_id = c_id
-            new_addr = self.helpers.rnd_big_text_field()
+            new_addr = rnd_big_text_field()
             phone_numbers = []
             e_mails = []
             for i in range(1, 5):
@@ -29,8 +31,8 @@ class ContactOps:
                 phone_numbers.append(random.choice([gen_phone_num, ""]))
 
             for i in range(1, 5):
-                gen_e_mail = self.helpers.clear_data(self.helpers.rnd_string(10) + '@'
-                                                     + self.helpers.rnd_string(10) + '.' + self.helpers.rnd_string(3))
+                gen_e_mail = clear_data(rnd_string(10) + '@'
+                                        + rnd_string(10) + '.' + rnd_string(3))
                 e_mails.append(random.choice([gen_e_mail, ""]))
         else:
             new_f_name = 'Andrey'

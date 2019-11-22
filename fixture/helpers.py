@@ -1,10 +1,8 @@
 import random
-import string
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from sys import maxsize
-import re
 
 
 class Helpers:
@@ -14,7 +12,7 @@ class Helpers:
         self.wd = self.app.wd
 
     def choose_rnd_el(self):
-        wd = self.app.wd
+        wd = self.wd
         # Gather all elements in the list
         list_elements = wd.find_elements_by_name("selected[]")
         # Choose rnd element in the list
@@ -23,23 +21,13 @@ class Helpers:
         return rnd_el_id
 
     def click_rnd_el(self, e_id):
-        wd = self.app.wd
+        wd = self.wd
         rnd_el = wd.find_element_by_xpath("//input[@value=" + str(e_id) + "]")
         rnd_el.click()
 
     def confirm_on_popup(self):
-        wd = self.app.wd
+        wd = self.wd
         wd.switch_to.alert.accept()
-
-    def rnd_string(self, length):
-        symbols = string.ascii_letters + " "*10 + string.digits
-        return ''.join(random.choice(symbols) for i in range(random.randrange(length)))
-
-    def rnd_big_text_field(self):
-        let = string.ascii_letters
-        dig = string.digits
-        n = "\n"
-        return ''.join(random.choice([random.choice(let), random.choice(dig), n]) for i in range(50))
 
     def wait_for_element(self, path, timeout=10):
         wd = self.wd
@@ -61,6 +49,3 @@ class Helpers:
         else:
             new_id = self.app.helpers.find_max_id(item_list) + 1
         return new_id
-
-    def clear_data(self, s):
-        return re.sub("\s{2,}", " ", s.strip(' '))

@@ -1,5 +1,7 @@
+from fixture.common import rnd_string, clear_data
 from model.group import Group
 from fixture.helpers import Helpers as helpers
+import fixture.common
 
 
 class GroupOps:
@@ -12,9 +14,9 @@ class GroupOps:
 
     def generate_group(self, g_id=None, c_type=True):
         if c_type:
-            new_name = self.helpers.clear_data(self.helpers.rnd_string(30))
-            new_head = self.helpers.clear_data(self.helpers.rnd_string(40))
-            new_foot = self.helpers.clear_data(self.helpers.rnd_string(40))
+            new_name = clear_data(rnd_string(30))
+            new_head = clear_data(rnd_string(40))
+            new_foot = clear_data(rnd_string(40))
             new_id = g_id
         else:
             new_name = 'New Custom Group'

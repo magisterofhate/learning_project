@@ -2,6 +2,7 @@
 import pytest
 from sys import maxsize
 from fixture.application import Application
+from fixture.common import clear_data
 from fixture.contact_operations import ContactOps
 
 q = Application()
@@ -10,7 +11,7 @@ contactops = ContactOps(q)
 
 test_data = [
     contactops.generate_contact(maxsize)
-    for i in range(3)
+    for i in range(1)
 ]
 
 q.destroy()
@@ -86,8 +87,8 @@ def test_all_info_from_main_page_match_info_from_edit_page(app):
     test_id = co.helpers.choose_rnd_el()
     test_contact = co.get_full_contact_info_from_edit_page(test_id)
     main_page_info = co.get_full_contact_info_from_main_page(test_id)
-    assert co.helpers.clear_data(test_contact.f_name) == main_page_info[0]
-    assert co.helpers.clear_data(test_contact.l_name) == main_page_info[1]
+    assert clear_data(test_contact.f_name) == main_page_info[0]
+    assert clear_data(test_contact.l_name) == main_page_info[1]
     assert co.clear_addresses(test_contact.addr) == co.clear_addresses(main_page_info[2])
     assert co.get_contact_email_list(test_contact) == main_page_info[3]
     assert co.get_contact_phone_list(test_contact) == main_page_info[4]
