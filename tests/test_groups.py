@@ -7,7 +7,7 @@ q = Application()
 
 test_data = [
     q.go.generate_group(maxsize, True)
-    for i in range(1)
+    for i in range(5)
 ]
 
 q.destroy()
