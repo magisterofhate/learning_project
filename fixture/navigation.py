@@ -1,9 +1,11 @@
+from fixture.helpers import Helpers as helpers
 
 
 class Navigation:
 
     def __init__(self, app):
         self.app = app
+        self.helpers = helpers(self.app)
 
     def login(self, user='admin', pwd='secret'):
         self.home_page()
@@ -38,11 +40,11 @@ class Navigation:
         if not ((wd.current_url.endswith("/addressbook/") or wd.current_url.endswith("/index.php")) and len(
                 wd.find_elements_by_xpath("//input[@value='Send e-Mail']")) > 0):
             wd.get(self.app.base_url)
-        self.app.helpers.wait_for_element("//body")
+        self.helpers.wait_for_element("//body")
 
     def group_list(self):
         wd = self.app.wd
         if not (wd.current_url.endswith("/group.php") and len(
                 wd.find_elements_by_xpath("//input[@value='Edit group']")) > 0):
             wd.find_element_by_link_text("groups").click()
-        self.app.helpers.wait_for_element("//body")
+        self.helpers.wait_for_element("//body")

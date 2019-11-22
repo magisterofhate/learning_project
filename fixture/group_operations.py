@@ -1,18 +1,20 @@
 from model.group import Group
+from fixture.helpers import Helpers as helpers
 
 
 class GroupOps:
 
     def __init__(self, app):
         self.app = app
+        self.helpers = helpers(self.app)
 
     group_cache = None
 
     def generate_group(self, g_id=None, c_type=True):
         if c_type:
-            new_name = self.app.helpers.clear_data(self.app.helpers.rnd_string(30))
-            new_head = self.app.helpers.clear_data(self.app.helpers.rnd_string(40))
-            new_foot = self.app.helpers.clear_data(self.app.helpers.rnd_string(40))
+            new_name = self.helpers.clear_data(self.helpers.rnd_string(30))
+            new_head = self.helpers.clear_data(self.helpers.rnd_string(40))
+            new_foot = self.helpers.clear_data(self.helpers.rnd_string(40))
             new_id = g_id
         else:
             new_name = 'New Custom Group'
@@ -76,3 +78,11 @@ class GroupOps:
         self.app.navigation.group_list()
         gr_name = wd.find_element_by_xpath("//span[.//input[contains(@value," + str(g_id) + ")]]").text
         return Group(id=g_id, name=gr_name)
+
+    def groups_presented(self):
+        return self.helpers.check_elements_presented()
+
+    def choose_rnd_group(self):
+        gr_id = self.helpers.choose_rnd_el()
+        self.helpers.click_rnd_el(gr_id)
+        return gr_id

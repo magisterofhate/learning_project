@@ -2,9 +2,6 @@
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from fixture.navigation import Navigation
-from fixture.helpers import Helpers
-from fixture.contact_operations import ContactOps
-from fixture.group_operations import GroupOps
 import warnings
 
 
@@ -23,11 +20,15 @@ class Application:
         self.select = webdriver.support.ui.Select
         self.wd.implicitly_wait(2)
         self.navigation = Navigation(self)
-        self.helpers = Helpers(self)
-        self.go = GroupOps(self)
-        self.co = ContactOps(self)
         self.base_url = base_url
 
     def destroy(self):
         self.wd.quit()
+
+    def is_session_valid(self):
+        try:
+            self.wd.current_url
+            return True
+        except:
+            return False
 

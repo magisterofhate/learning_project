@@ -11,6 +11,7 @@ class Helpers:
 
     def __init__(self, app):
         self.app = app
+        self.wd = self.app.wd
 
     def choose_rnd_el(self):
         wd = self.app.wd
@@ -41,21 +42,15 @@ class Helpers:
         return ''.join(random.choice([random.choice(let), random.choice(dig), n]) for i in range(50))
 
     def wait_for_element(self, path, timeout=10):
-        wait = WebDriverWait(self.app.wd, timeout)
+        wd = self.wd
+        wait = WebDriverWait(wd, timeout)
         wait.until(ec.visibility_of_element_located((By.XPATH, path)))
 
-    def is_session_valid(self):
-        try:
-            self.app.wd.current_url
-            return True
-        except:
-            return False
-
     def check_elements_presented(self):
-        wd = self.app.wd
+        wd = self.wd
         self.wait_for_element("//body")
-        if len(wd.find_elements_by_xpath("//input[@name='selected[]']")) == 0:
-            return False
+        if len(wd.find_elements_by_xpath("//input[@name='selected[]']")) != 0:
+            return True
 
     def find_max_id(self, item_list):
         return sorted(item_list, reverse=True)[0].id

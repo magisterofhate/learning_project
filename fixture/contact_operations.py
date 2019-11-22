@@ -4,22 +4,24 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 import re
+from fixture.helpers import Helpers as helpers
 
 
 class ContactOps:
 
     def __init__(self, app):
         self.app = app
+        self.helpers = helpers(self.app)
 
     contacts_cache = None
 
     def generate_contact(self, c_id=None, c_type=True):
         if c_type:
-            new_f_name = self.app.helpers.clear_data(self.app.helpers.rnd_string(20))
-            new_l_name = self.app.helpers.clear_data(self.app.helpers.rnd_string(30))
-            new_m_name = self.app.helpers.clear_data(self.app.helpers.rnd_string(20))
+            new_f_name = self.helpers.clear_data(self.helpers.rnd_string(20))
+            new_l_name = self.helpers.clear_data(self.helpers.rnd_string(30))
+            new_m_name = self.helpers.clear_data(self.helpers.rnd_string(20))
             new_id = c_id
-            new_addr = self.app.helpers.rnd_big_text_field()
+            new_addr = self.helpers.rnd_big_text_field()
             phone_numbers = []
             e_mails = []
             for i in range(1, 5):
@@ -27,8 +29,8 @@ class ContactOps:
                 phone_numbers.append(random.choice([gen_phone_num, ""]))
 
             for i in range(1, 5):
-                gen_e_mail = self.app.helpers.clear_data(self.app.helpers.rnd_string(10) + '@'
-                                             + self.app.helpers.rnd_string(10) + '.' + self.app.helpers.rnd_string(3))
+                gen_e_mail = self.helpers.clear_data(self.helpers.rnd_string(10) + '@'
+                                                     + self.helpers.rnd_string(10) + '.' + self.helpers.rnd_string(3))
                 e_mails.append(random.choice([gen_e_mail, ""]))
         else:
             new_f_name = 'Andrey'
@@ -183,3 +185,11 @@ class ContactOps:
                                 map(lambda x: self.clear_phones(x),
                                     filter(lambda x: x is not None,
                                            [contact.h_phone, contact.m_phone, contact.w_phone, contact.s_phone]))))
+
+    def contacts_presented(self):
+        return self.helpers.check_elements_presented()
+
+    def choose_rnd_contact(self):
+        co_id = self.helpers.choose_rnd_el()
+        self.helpers.click_rnd_el(co_id)
+        return co_id

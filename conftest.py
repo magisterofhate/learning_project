@@ -20,7 +20,7 @@ def app(request):
         with open(file_path) as f:
             config = json.load(f)
 
-    if fixture is None or not fixture.helpers.is_session_valid():
+    if fixture is None or not fixture.is_session_valid():
         fixture = Application(browser=config['browser'], base_url=config['baseUrl'])
         fixture.navigation.int_login(config['username'], config['password'])
     return fixture

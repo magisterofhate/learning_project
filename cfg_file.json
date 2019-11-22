@@ -1,5 +1,5 @@
 {
-  "browser": "chrome",
+  "browser": "ff",
   "baseUrl": "http://10.201.48.35/addressbook/",
   "username": "admin",
   "password": "secret"
