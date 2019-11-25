@@ -2,8 +2,9 @@
 
 import pytest
 import json
-import os.path
+import os.path as op
 from fixture.application import Application
+import jsonpickle
 
 
 fixture = None
@@ -14,7 +15,7 @@ def app(request):
     global fixture
     global config
     dir_path = request.config.getoption("--file")
-    file_path = os.path.join(dir_path, "cfg_file.json")
+    file_path = op.join(dir_path, "cfg_file.json")
 
     if config is None:
         with open(file_path) as f:
@@ -37,3 +38,15 @@ def stop(request):
 
 def pytest_addoption(parser):
     parser.addoption("--file", action="store", default="C:/Anatoly_Milinevsky/learning_project/")
+
+
+def pytest_generate_tests(metafunc):
+    for fixture in metafunc.fixturenames:
+        if fixture.startswith("test_data_"):
+            test_data = load_from_json(fixture[10:])
+            metafunc.parametrize(fixture, test_data, ids=[str(x) for x in test_data])
+
+
+def load_from_json(file):
+    with open(op.join(op.dirname(op.abspath(__file__)), "test_data/%s.json" % file)) as f:
+        return jsonpickle.decode(f.read())

@@ -1,24 +1,10 @@
 # -*- coding: utf-8 -*-
-import pytest
-from sys import maxsize
-from fixture.application import Application
 from fixture.common import clear_data, generate_contact
 from fixture.contact_operations import ContactOps
 
-q = Application()
-contactops = ContactOps(q)
 
-
-test_data = [
-    generate_contact(maxsize)
-    for i in range(1)
-]
-
-q.destroy()
-
-
-@pytest.mark.parametrize("contact", test_data, ids=[repr(x) for x in test_data])
-def test_add_contact(app, contact):
+def test_add_contact(app, test_data_contacts):
+    contact = test_data_contacts
     co = ContactOps(app)
     app.navigation.home_page()
     old_contact_list = co.get_contact_list()

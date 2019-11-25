@@ -1,24 +1,10 @@
 # -*- coding: utf-8 -*-
-import pytest
-from sys import maxsize
-from fixture.application import Application
 from fixture.common import generate_group
 from fixture.group_operations import GroupOps
 
 
-q = Application()
-groupops = GroupOps(q)
-
-test_data = [
-    generate_group(maxsize)
-    for i in range(3)
-]
-
-q.destroy()
-
-
-@pytest.mark.parametrize("group", test_data, ids=[repr(x) for x in test_data])
-def test_add_group(app, group):
+def test_add_group(app, test_data_groups):
+    group = test_data_groups
     go = GroupOps(app)
     app.navigation.group_list()
     old_group_list = go.get_group_list()
