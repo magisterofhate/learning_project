@@ -2,7 +2,7 @@
 import pytest
 from sys import maxsize
 from fixture.application import Application
-from fixture.common import clear_data
+from fixture.common import clear_data, generate_contact
 from fixture.contact_operations import ContactOps
 
 q = Application()
@@ -10,7 +10,7 @@ contactops = ContactOps(q)
 
 
 test_data = [
-    contactops.generate_contact(maxsize)
+    generate_contact(maxsize)
     for i in range(1)
 ]
 
@@ -35,12 +35,12 @@ def test_modify_contact(app):
     co = ContactOps(app)
     app.navigation.home_page()
     if not co.contacts_presented():
-        co.create_contact(co.generate_contact())
+        co.create_contact(generate_contact())
     app.navigation.home_page()
     old_contact_list = co.get_contact_list()
     usr_id = co.helpers.choose_rnd_el()
     co.click_user_for_edit(usr_id)
-    mod_contact = co.generate_contact(usr_id)
+    mod_contact = generate_contact(usr_id)
     co.modify_contact(mod_contact)
     app.navigation.home_page()
     new_contact_list = co.get_contact_list()
@@ -52,7 +52,7 @@ def test_delete_contact_from_edit_form(app):
     co = ContactOps(app)
     app.navigation.home_page()
     if not co.contacts_presented():
-        co.create_contact(co.generate_contact())
+        co.create_contact(generate_contact())
     app.navigation.home_page()
     old_contact_list = co.get_contact_list()
     del_id = co.helpers.choose_rnd_el()
@@ -69,7 +69,7 @@ def test_delete_contact_from_the_list(app):
     co = ContactOps(app)
     app.navigation.home_page()
     if not co.contacts_presented():
-        co.create_contact(co.generate_contact())
+        co.create_contact(generate_contact())
     app.navigation.home_page()
     old_contact_list = co.get_contact_list()
     del_user = co.find_usr_by_id(co.choose_rnd_contact())

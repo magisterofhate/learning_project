@@ -2,6 +2,7 @@
 import pytest
 from sys import maxsize
 from fixture.application import Application
+from fixture.common import generate_group
 from fixture.group_operations import GroupOps
 
 
@@ -9,7 +10,7 @@ q = Application()
 groupops = GroupOps(q)
 
 test_data = [
-    groupops.generate_group(maxsize)
+    generate_group(maxsize)
     for i in range(3)
 ]
 
@@ -34,7 +35,7 @@ def test_del_group(app):
     go = GroupOps(app)
     app.navigation.group_list()
     if not go.groups_presented():
-        go.create_group(go.generate_group())
+        go.create_group(generate_group())
     app.navigation.group_list()
     old_group_list = go.get_group_list()
     del_group = go.find_gr_by_id(go.choose_rnd_group())
@@ -49,10 +50,10 @@ def test_mod_group(app):
     go = GroupOps(app)
     app.navigation.group_list()
     if not go.groups_presented():
-        go.create_group(go.generate_group())
+        go.create_group(generate_group())
     app.navigation.group_list()
     old_group_list = go.get_group_list()
-    new_group = go.generate_group(go.choose_rnd_group())
+    new_group = generate_group(go.choose_rnd_group())
     go.modify_group(new_group)
     app.navigation.group_list()
     new_group_list = go.get_group_list()
