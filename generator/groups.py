@@ -3,6 +3,22 @@ import fixture.common as common
 from sys import maxsize
 import os.path as op
 import jsonpickle
+import getopt, sys
+
+try:
+    opts, args = getopt.getopt(sys.argv[1:], "n:f:", ["groups quantity", "file path"])
+except getopt.GetoptError as err:
+    print(err)
+    sys.exit(2)
+
+n = 5
+f = "test_data/groups.json"
+
+for o, a in opts:
+    if o == "-n":
+        n = int(a)
+    elif o == "-f":
+        f = a
 
 
 def generate_group_data():
@@ -15,10 +31,10 @@ def generate_group_data():
 
 test_data = [
     generate_group_data()
-    for i in range(5)
+    for i in range(n)
 ]
 
-file = op.join(op.dirname(op.abspath(__file__)), "../test_data/groups.json")
+file = op.join(op.dirname(op.abspath(__file__)), "..", f)
 
 with open(file, "w") as out:
     jsonpickle.set_encoder_options("json", indent=2)
