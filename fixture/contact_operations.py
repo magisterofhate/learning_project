@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 import re
 from fixture.helpers import Helpers as helpers
+from fixture.common import clear_data
 
 
 class ContactOps:
@@ -162,3 +163,5 @@ class ContactOps:
         co_id = self.helpers.choose_rnd_el()
         self.helpers.click_rnd_el(co_id)
         return co_id
+
+

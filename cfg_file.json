@@ -1,6 +1,14 @@
 {
-  "browser": "ff",
-  "baseUrl": "http://10.201.48.35/addressbook/",
-  "username": "admin",
-  "password": "secret"
+  "web": {
+    "browser": "ff",
+    "baseUrl": "http://10.201.48.35/addressbook/",
+    "username": "admin",
+    "password": "secret"
+  },
+  "db": {
+    "host": "10.201.48.35",
+    "name": "addressbook",
+    "user": "root",
+    "pwd": ""
+  }
 }

@@ -65,3 +65,11 @@ def generate_group(g_id=None, c_type=True):
         new_foot = 'New foot'
         new_id = g_id
     return Group(id=new_id, name=new_name, header=new_head, footer=new_foot)
+
+
+def clean_db_contacts(cont):
+    return Contact(id=cont.id, f_name=clear_data(cont.f_name), l_name=clear_data(cont.l_name))
+
+
+def clean_db_groups(group):
+    return Group(id=group.id, name=clear_data(group.name))
