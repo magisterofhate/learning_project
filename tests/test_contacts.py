@@ -87,3 +87,13 @@ def test_all_info_from_main_page_match_info_from_edit_page(app):
     assert co.clear_addresses(test_contact.addr) == co.clear_addresses(main_page_info[2])
     assert co.get_contact_email_list(test_contact) == main_page_info[3]
     assert co.get_contact_phone_list(test_contact) == main_page_info[4]
+
+
+def test_full_contact_list_from_main_page(app, db):
+    co = ContactOps(app)
+    contacts_ui = co.get_full_info_contact_list()
+    contacts_db = db.get_full_info_contact_list_from_db()
+    reorganized_contacts = []
+    for cont in contacts_db:
+        reorganized_contacts.append(co.reorganize_contact_full_info(cont))
+    assert contacts_ui == reorganized_contacts

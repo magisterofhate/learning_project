@@ -14,6 +14,7 @@ class ContactOps:
         self.helpers = helpers(self.app)
 
     contacts_cache = None
+    contacts_full_cache = None
 
     def create_contact(self, contact):
         wd = self.app.wd
@@ -164,4 +165,28 @@ class ContactOps:
         self.helpers.click_rnd_el(co_id)
         return co_id
 
+    def get_full_info_contact_list(self):
+        if self.contacts_full_cache is None:
+            wd = self.app.wd
+            self.app.navigation.home_page()
+            c_list = wd.find_elements_by_xpath("//tr[@name='entry']")
+            self.contacts_full_cache = []
+            for each in c_list:
+                c_id = int(each.find_element_by_xpath(".//td/input[@name='selected[]']").get_attribute("id"))
+                c_f_name = each.find_element_by_xpath("td[3]").text
+                c_l_name = each.find_element_by_xpath("td[2]").text
+                addr = self.clear_addresses(each.find_element_by_xpath("td[4]").text)
+                e_mails = each.find_element_by_xpath("td[5]").text
+                phones = each.find_element_by_xpath("td[6]").text
+                info = {'id': c_id, 'f_name': c_f_name, 'l_name': c_l_name, 'addr': addr,
+                        'e_mails': e_mails, 'phones': phones}
+                self.contacts_full_cache.append(info)
+        return list(self.contacts_full_cache)
 
+    def reorganize_contact_full_info(self, contact):
+        cont_phones = self.get_contact_phone_list(contact)
+        cont_emails = self.get_contact_email_list(contact)
+        cont_dict = {'id': contact.id, 'f_name': clear_data(contact.f_name), 'l_name': clear_data(contact.l_name),
+                     'addr': clear_data(self.clear_addresses(re.sub("\r", "\n", contact.addr))),
+                     'e_mails': cont_emails, 'phones': cont_phones}
+        return cont_dict

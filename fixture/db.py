@@ -38,3 +38,19 @@ class DbFixture:
         finally:
             cursor.close()
         return contact_list
+
+    def get_full_info_contact_list_from_db(self):
+        contact_list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select id, firstname, lastname, address, home, mobile, work, phone2, email, email2, "
+                           "email3 from addressbook order by lastname")
+            for row in cursor:
+                (c_id, cf_name, cl_name, cl_addr, cl_home, cl_mobile, cl_work, cl_sphone,
+                 cl_email, cl_email2, cl_email3) = row
+                contact_list.append((Contact(id=c_id, f_name=cf_name, l_name=cl_name, addr=cl_addr, h_phone=cl_home,
+                                             m_phone=cl_mobile, w_phone=cl_work, s_phone=cl_sphone,
+                                             e_mail1=cl_email, e_mail2=cl_email2, e_mail3=cl_email3)))
+        finally:
+            cursor.close()
+        return contact_list

@@ -13,7 +13,7 @@ except getopt.GetoptError as err:
     print(err)
     sys.exit(2)
 
-n = 5
+n = 10
 f = "test_data/contacts.json"
 
 for o, a in opts:
