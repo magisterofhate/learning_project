@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-from fixture.common import clear_data, generate_contact, clean_db_contacts
+from fixture.common import clear_data, generate_contact, clean_db_contacts, generate_group
 from fixture.contact_operations import ContactOps
+from fixture.group_operations import GroupOps
 
 
 def test_add_contact(app, db, check_ui, test_data_contacts):
@@ -97,3 +98,21 @@ def test_full_contact_list_from_main_page(app, db):
     for cont in contacts_db:
         reorganized_contacts.append(co.reorganize_contact_full_info(cont))
     assert contacts_ui == reorganized_contacts
+
+
+def test_add_contact_to_group(app, db):
+    co = ContactOps(app)
+    go = GroupOps(app)
+    app.navigation.home_page()
+    if not co.contacts_presented():
+        co.create_contact(generate_contact())
+    app.navigation.group_list()
+    group_id_to_add_to = go.helpers.choose_rnd_el()
+    if not go.groups_presented():
+        go.create_group(generate_group())
+    app.navigation.home_page()
+    user_id_to_add = co.helpers.choose_rnd_el()
+    co.helpers.click_rnd_el(user_id_to_add)
+    co.add_contact_to_group(group_id_to_add_to)
+    contacts_in_group = db.get_contact_ids_of_group(group_id_to_add_to)
+    assert user_id_to_add in contacts_in_group

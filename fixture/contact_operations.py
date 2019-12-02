@@ -190,3 +190,13 @@ class ContactOps:
                      'addr': clear_data(self.clear_addresses(re.sub("\r", "\n", contact.addr))),
                      'e_mails': cont_emails, 'phones': cont_phones}
         return cont_dict
+
+    def add_contact_to_group(self, group_id):
+        wd = self.app.wd
+        select = self.app.select
+        dropdown = select(wd.find_element_by_xpath("//select[@name='to_group']"))
+        gr_id = group_id
+        dropdown.select_by_value(str(gr_id))
+        wd.find_element_by_xpath("//input[@value='Add to']").click()
+
+

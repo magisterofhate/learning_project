@@ -1,6 +1,7 @@
 import pymysql.cursors
 from model.group import Group
 from model.contact import Contact
+import itertools
 
 
 class DbFixture:
@@ -54,3 +55,16 @@ class DbFixture:
         finally:
             cursor.close()
         return contact_list
+
+    def get_contact_ids_of_group(self, gr_id):
+        converter = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select id from address_in_groups where group_id = %s" % gr_id)
+            for row in cursor:
+                (c_id) = row
+                converter.append(c_id)
+        finally:
+            cursor.close()
+        contacts_list = list(itertools.chain(*converter))
+        return contacts_list
