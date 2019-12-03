@@ -1,7 +1,7 @@
 import random
 import re
 import string
-
+from fixture.db import DbFixture as db
 from model.contact import Contact
 from model.group import Group
 
@@ -73,3 +73,15 @@ def clean_db_contacts(cont):
 
 def clean_db_groups(group):
     return Group(id=group.id, name=clear_data(group.name))
+
+
+def pick_rnd_contact_id_from_db(database):
+    return random.choice(db.get_all_contact_ids(database))
+
+
+def pick_rnd_group_id_from_db(database):
+    return random.choice(db.get_all_group_ids(database))
+
+
+def pick_rnd_group_with_users(database):
+    return random.choice(db.get_group_ids_with_users(database))

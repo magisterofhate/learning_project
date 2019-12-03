@@ -68,3 +68,44 @@ class DbFixture:
             cursor.close()
         contacts_list = list(itertools.chain(*converter))
         return contacts_list
+
+    def get_all_contact_ids(self):
+        converter = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select id from addressbook")
+            for row in cursor:
+                (c_id) = row
+                converter.append(c_id)
+        finally:
+            cursor.close()
+        id_list = list(itertools.chain(*converter))
+        return id_list
+
+    def get_all_group_ids(self):
+        converter = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select group_id from group_list")
+            for row in cursor:
+                (g_id) = row
+                converter.append(g_id)
+        finally:
+            cursor.close()
+        id_list = list(itertools.chain(*converter))
+        return id_list
+
+    def get_group_ids_with_users(self):
+        converter = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("SELECT group_id FROM `address_in_groups` as ag "
+                           "join addressbook as a ON "
+                           "a.id = ag.id")
+            for row in cursor:
+                (g_id) = row
+                converter.append(g_id)
+        finally:
+            cursor.close()
+        id_list = list(itertools.chain(*converter))
+        return id_list

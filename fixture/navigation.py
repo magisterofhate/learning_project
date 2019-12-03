@@ -48,3 +48,10 @@ class Navigation:
                 wd.find_elements_by_xpath("//input[@value='Edit group']")) > 0):
             wd.find_element_by_link_text("groups").click()
         self.helpers.wait_for_element("//body")
+
+    def go_to_group(self, group_id):
+        wd = self.app.wd
+        select = self.app.select
+        dropdown = select(wd.find_element_by_xpath("//select[@name='group']"))
+        gr_id = group_id
+        dropdown.select_by_value(str(gr_id))

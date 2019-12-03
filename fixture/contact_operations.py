@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 import re
 from fixture.helpers import Helpers as helpers
-from fixture.common import clear_data
+from fixture.common import clear_data, pick_rnd_contact_id_from_db, pick_rnd_group_id_from_db
 
 
 class ContactOps:
@@ -198,5 +198,23 @@ class ContactOps:
         gr_id = group_id
         dropdown.select_by_value(str(gr_id))
         wd.find_element_by_xpath("//input[@value='Add to']").click()
+
+    def add_rnd_contact_to_rnd_group(self, database):
+        wd = self.app.wd
+        select = self.app.select
+        self.app.navigation.home_page()
+        group_id_to_add_to = pick_rnd_group_id_from_db(database)
+        user_id_to_add = pick_rnd_contact_id_from_db(database)
+        self.helpers.click_rnd_el(user_id_to_add)
+        dropdown = select(wd.find_element_by_xpath("//select[@name='to_group']"))
+        dropdown.select_by_value(str(group_id_to_add_to))
+        wd.find_element_by_xpath("//input[@value='Add to']").click()
+        return {'g_id': group_id_to_add_to, 'u_id': user_id_to_add}
+
+    def remove_contact_from_group(self):
+        wd = self.app.wd
+        # Submit deletion
+        wd.find_element_by_xpath("//input[@name='remove']").click()
+
 
 
