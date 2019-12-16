@@ -25,12 +25,12 @@ class Navigation:
         return len(self.app.wd.find_elements_by_xpath("//input[@value='Logout']")) > 0
 
     def int_login(self, user, pwd):
-         if self.is_logged_in():
-             if self.is_logged_in_as(user):
+        if self.is_logged_in():
+            if self.is_logged_in_as(user):
                 return
-             else:
-                 self.logout()
-         self.login(user, pwd)
+            else:
+                self.logout()
+        self.login(user, pwd)
 
     def is_logged_in_as(self, user):
         return self.app.wd.find_elements_by_xpath("//form[@name='logout']/b") == "(" + user + ")"
