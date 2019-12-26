@@ -1,4 +1,4 @@
-from model.group import Group
+import model.group as group
 import fixture.common as common
 from sys import maxsize
 import os.path as op
@@ -26,7 +26,7 @@ def generate_group_data():
     new_head = common.clear_data(common.rnd_string(40))
     new_foot = common.clear_data(common.rnd_string(30))
     new_id = maxsize
-    return Group(id=new_id, name=new_name, header=new_head, footer=new_foot)
+    return group.Group(id=new_id, name=new_name, header=new_head, footer=new_foot)
 
 
 test_data = [
