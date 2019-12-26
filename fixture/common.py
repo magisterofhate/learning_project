@@ -7,7 +7,7 @@ from model.group import Group
 
 
 def rnd_string(length):
-    symbols = string.ascii_letters + " "*10 + string.digits
+    symbols = string.ascii_letters + " " * 10 + string.digits
     return ''.join(random.choice(symbols) for i in range(random.randrange(length)))
 
 
@@ -19,7 +19,7 @@ def rnd_big_text_field():
 
 
 def clear_data(s):
-    return re.sub("\s{2,}", " ", s.strip(' '))
+    return re.sub(" {2,}", " ", s.strip(' '))
 
 
 def generate_contact(c_id=None, c_type=True):
