@@ -54,6 +54,9 @@ def db(request):
 
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
+    global fixture
+    fixture = Application(browser=web_config['browser'], base_url=web_config['baseUrl'])
+
     def finalize():
         fixture.navigation.int_logout()
         fixture.destroy()
