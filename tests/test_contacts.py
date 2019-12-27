@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import allure
 from fixture.common import clear_data, generate_contact, clean_db_contacts, generate_group, \
     pick_rnd_contact_id_from_db, pick_rnd_group_id_from_db, pick_rnd_group_with_users
 from fixture.contact_operations import ContactOps
@@ -9,16 +10,20 @@ def test_add_contact(app, db, check_ui, test_data_contacts):
     contact = test_data_contacts
     co = ContactOps(app)
     app.navigation.home_page()
-    old_contact_list = db.get_contact_list_from_db()
+    with allure.step('Get old contact list'):
+        old_contact_list = db.get_contact_list_from_db()
     test_contact = contact
-    co.create_contact(test_contact)
+    with allure.step('Create contact %s' % test_contact):
+        co.create_contact(test_contact)
     app.navigation.home_page()
     old_contact_list.append(test_contact)
-    new_contact_list = db.get_contact_list_from_db()
-    assert sorted(new_contact_list) == sorted(old_contact_list)
-    if check_ui:
-        contacts_ui = co.get_contact_list()
-        assert sorted(map(clean_db_contacts, new_contact_list)) == sorted(contacts_ui)
+    with allure.step('Get new contact list'):
+        new_contact_list = db.get_contact_list_from_db()
+    with allure.step('Verify that new contact is on the list'):
+        assert sorted(new_contact_list) == sorted(old_contact_list)
+        if check_ui:
+            contacts_ui = co.get_contact_list()
+            assert sorted(map(clean_db_contacts, new_contact_list)) == sorted(contacts_ui)
 
 
 def test_modify_contact(app, db, check_ui):
