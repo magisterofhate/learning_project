@@ -7,7 +7,7 @@ from model.group import Group
 
 
 def rnd_string(length):
-    symbols = string.ascii_letters + " " * 10 + string.digits + "'" * 5
+    symbols = string.ascii_letters + " " * 10 + string.digits
     return ''.join(random.choice(symbols) for i in range(random.randrange(length)))
 
 
