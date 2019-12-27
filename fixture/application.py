@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from fixture.navigation import Navigation
 import warnings
+from selenium.webdriver.firefox.options import Options
 
 
 class Application:
@@ -18,7 +19,9 @@ class Application:
 
     def initialize(self):
         if self.browser == "ff":
-            self.wd = webdriver.Firefox()
+            options = Options()
+            options.headless = True
+            self.wd = webdriver.Firefox(options=options)
         elif self.browser == "chrome":
             self.wd = webdriver.Chrome()
         elif self.browser == "ie":
