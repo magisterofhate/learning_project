@@ -54,8 +54,10 @@ def db(request):
 
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
+    global fixture
+
     def finalize():
-        fixture.navigation.int_logout()
+        # fixture.navigation.int_logout()
         fixture.destroy()
     request.addfinalizer(finalize)
     return fixture
