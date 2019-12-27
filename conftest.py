@@ -8,7 +8,7 @@ import jsonpickle
 from fixture.db import DbFixture
 
 
-fixture = None
+# fixture = None
 config = None
 
 
@@ -21,22 +21,38 @@ def load_config(file_path):
 
 
 @pytest.fixture
-def app(request):
-    global fixture
-    global config
-    dir_path = request.config.getoption("--file")
-    file_path = op.join(dir_path, "cfg_file.json")
-
-    web_config = load_config(file_path)['web']
+def app(app_for_session):
+    # global fixture
+    # global config
+    # dir_path = request.config.getoption("--file")
+    # file_path = op.join(dir_path, "cfg_file.json")
+    #
+    # web_config = load_config(file_path)['web']
 
     # if config is None:
     #     with open(file_path) as f:
     #         config = json.load(f)
 
-    if fixture is None or not fixture.is_session_valid():
-        fixture = Application(browser=web_config['browser'], base_url=web_config['baseUrl'])
-        fixture.navigation.int_login(web_config['username'], web_config['password'])
-    return fixture
+    if app_for_session is None or not app_for_session.is_session_valid():
+        app_for_session.initialize()
+    return app_for_session
+
+
+@pytest.fixture(scope="session")
+def app_for_session(request):
+    dir_path = request.config.getoption("--file")
+    file_path = op.join(dir_path, "cfg_file.json")
+    web_config = load_config(file_path)['web']
+    app = Application(browser=web_config['browser'], base_url=web_config['baseUrl'], username=web_config['username'],
+                      password=web_config['password'])
+    app.initialize()
+    # app.navigation.int_login(web_config['username'], web_config['password'])
+
+    def finalize():
+        app.navigation.int_logout()
+        app.destroy()
+    request.addfinalizer(finalize)
+    return app
 
 
 @pytest.fixture(scope="session")
@@ -52,16 +68,16 @@ def db(request):
     return dbfixture
 
 
-@pytest.fixture(scope="session", autouse=True)
-def stop(request):
-    global fixture
-    fixture = Application(browser=web_config['browser'], base_url=web_config['baseUrl'])
-
-    def finalize():
-        fixture.navigation.int_logout()
-        fixture.destroy()
-    request.addfinalizer(finalize)
-    return fixture
+# @pytest.fixture(scope="session", autouse=True)
+# def stop(request):
+#     global fixture
+#     fixture = Application(browser=web_config['browser'], base_url=web_config['baseUrl'])
+#
+#     def finalize():
+#         fixture.navigation.int_logout()
+#         fixture.destroy()
+#     request.addfinalizer(finalize)
+#     return fixture
 
 
 @pytest.fixture
