@@ -50,7 +50,7 @@ test_data = [
     for i in range(n)
 ]
 
-file = op.join(op.dirname(op.abspath(__file__)), "..", f)
+file = op.join(op.dirname(op.dirname(op.abspath(__file__))), "..", f)
 
 with open(file, "w") as out:
     jsonpickle.set_encoder_options("json", indent=2)
