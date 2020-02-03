@@ -16,15 +16,14 @@ def test_add_contact(app, db, check_ui, test_data_contacts):
     test_contact = contact
     with allure.step('Create contact %s' % test_contact):
         co.create_contact(test_contact)
-    with allure.step('Check te soft assertion'):
-        expect(1 == 2, 'This will fail, but not stop the test')
     app.navigation.home_page()
     old_contact_list.append(test_contact)
     with allure.step('Get new contact list'):
         new_contact_list = db.get_contact_list_from_db()
     with allure.step('Verify that new contact is on the list'):
-        assert sorted(new_contact_list) == sorted(old_contact_list)
-        delayed_assert.assert_expectations()
+        with delayed_assert.assert_all():
+            expect(1 == 2, 'This will fail, but not stop the test')
+            expect(sorted(new_contact_list) == sorted(old_contact_list), 'Lists are equal')
         if check_ui:
             contacts_ui = co.get_contact_list()
             assert sorted(map(clean_db_contacts, new_contact_list)) == sorted(contacts_ui)
