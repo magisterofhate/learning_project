@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import Select
 from fixture.navigation import Navigation
 import warnings
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.options import Options as ChromeO
 
 
 class Application:
@@ -23,7 +24,12 @@ class Application:
             options.headless = True
             self.wd = webdriver.Firefox(options=options)
         elif self.browser == "chrome":
-            self.wd = webdriver.Chrome()
+            options = ChromeO()
+            options.add_argument('--headless')
+            options.add_argument('--no-sandbox')
+            options.add_argument('--disable-gpu')
+            self.wd = webdriver.Chrome(options=options)
+            # self.wd = webdriver.Chrome()
         elif self.browser == "ie":
             self.wd = webdriver.Ie()
         else:
